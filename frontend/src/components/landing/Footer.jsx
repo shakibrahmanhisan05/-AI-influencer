@@ -100,7 +100,7 @@ export const Footer = () => {
         {/* Bottom bar */}
         <div className="pt-8 border-t border-white/[0.06] flex flex-col sm:flex-row items-center justify-between gap-4">
           <p className="text-xs text-[#94A3B8]">
-            &copy; 2025 InfluenceAI. All rights reserved.
+            &copy; {new Date().getFullYear()} InfluenceAI. All rights reserved.
           </p>
           <div className="flex items-center gap-6">
             <a href="#" className="text-xs text-[#94A3B8] hover:text-white transition-colors duration-300">Privacy Policy</a>

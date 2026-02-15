@@ -3,7 +3,7 @@ import { motion, useInView } from 'framer-motion';
 import { testimonials } from '../../data/mock';
 import { Star, Quote } from 'lucide-react';
 
-const cardTilts = ['-rotate-1', 'rotate-0', 'rotate-1'];
+const cardTilts = ['-rotate-1', 'rotate-0', 'rotate-1', 'rotate-1', 'rotate-0', '-rotate-1'];
 
 export const Testimonials = () => {
   const ref = useRef(null);
@@ -18,12 +18,16 @@ export const Testimonials = () => {
           transition={{ duration: 0.5 }}
           className="text-center mb-16"
         >
+          <div className="inline-flex items-center gap-2 bg-white/5 border border-white/10 rounded-full px-4 py-1.5 mb-5">
+            <Star className="w-3.5 h-3.5 text-amber-400 fill-amber-400" />
+            <span className="text-sm font-medium text-white/70">TRUSTED BY CREATORS</span>
+          </div>
           <h2 className="font-display font-bold text-3xl lg:text-[48px] leading-tight text-white mb-4">
             Influencers Are Loving It
           </h2>
         </motion.div>
 
-        <div className="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl mx-auto">
           {testimonials.map((t, i) => (
             <motion.div
               key={i}
@@ -35,13 +39,23 @@ export const Testimonials = () => {
               <div className="absolute -top-3 -left-1">
                 <Quote className="w-8 h-8 text-[#7C3AED]/30" />
               </div>
-              <p className="text-white/85 text-[15px] leading-relaxed mb-6 relative z-10">
+
+              {/* Avatar header */}
+              <div className="flex items-center gap-3 mb-5">
+                <img
+                  src={t.avatar}
+                  alt={t.name}
+                  className="w-11 h-11 rounded-full object-cover border-2 border-white/10"
+                />
+                <div>
+                  <p className="font-display font-bold text-white text-sm">{t.name}</p>
+                  <p className="text-xs text-[#94A3B8]">{t.details}</p>
+                </div>
+              </div>
+
+              <p className="text-white/85 text-[15px] leading-relaxed relative z-10">
                 "{t.quote}"
               </p>
-              <div className="border-t border-white/[0.06] pt-4">
-                <p className="font-display font-bold text-white text-sm">{t.name}</p>
-                <p className="text-xs text-[#94A3B8] mt-0.5">{t.details}</p>
-              </div>
             </motion.div>
           ))}
         </div>

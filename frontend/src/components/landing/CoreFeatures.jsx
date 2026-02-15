@@ -3,6 +3,7 @@ import { motion, useInView } from 'framer-motion';
 import { coreFeatures } from '../../data/mock';
 import { MessageSquare, Package, UserCircle, Users, Check, Bot, Search, Smile, ArrowRight } from 'lucide-react';
 
+
 const featureIcons = {
   'smart-reply': MessageSquare,
   'inventory': Package,
@@ -155,6 +156,10 @@ export const CoreFeatures = () => {
           transition={{ duration: 0.5 }}
           className="text-center mb-20"
         >
+          <div className="inline-flex items-center gap-2 bg-[#7C3AED]/10 border border-[#7C3AED]/20 rounded-full px-4 py-1.5 mb-5">
+            <Bot className="w-3.5 h-3.5 text-[#7C3AED]" />
+            <span className="text-sm font-medium text-[#7C3AED]">CORE FEATURES</span>
+          </div>
           <h2 className="font-display font-bold text-3xl lg:text-[48px] leading-tight text-white mb-4">
             What Your AI Agent Does For You
           </h2>

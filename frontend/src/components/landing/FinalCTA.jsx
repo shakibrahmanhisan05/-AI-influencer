@@ -14,17 +14,26 @@ export const FinalCTA = () => {
 
       {/* Floating bubbles */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        {[...Array(8)].map((_, i) => (
+        {[
+          { width: 32, height: 32, left: '8%', duration: 6, delay: 0 },
+          { width: 48, height: 48, left: '18%', duration: 8, delay: 1 },
+          { width: 24, height: 24, left: '32%', duration: 5, delay: 0.5 },
+          { width: 56, height: 56, left: '47%', duration: 9, delay: 2 },
+          { width: 20, height: 20, left: '61%', duration: 7, delay: 0.3 },
+          { width: 40, height: 40, left: '73%', duration: 6, delay: 1.5 },
+          { width: 28, height: 28, left: '84%', duration: 8, delay: 0.8 },
+          { width: 36, height: 36, left: '93%', duration: 5, delay: 2.5 },
+        ].map((b, i) => (
           <div
             key={i}
             className="absolute rounded-full bg-white/5 animate-float-bubble"
             style={{
-              width: `${20 + Math.random() * 40}px`,
-              height: `${20 + Math.random() * 40}px`,
-              left: `${Math.random() * 100}%`,
-              bottom: `-${20 + Math.random() * 40}px`,
-              animationDuration: `${4 + Math.random() * 6}s`,
-              animationDelay: `${Math.random() * 4}s`,
+              width: `${b.width}px`,
+              height: `${b.height}px`,
+              left: b.left,
+              bottom: `-${b.height}px`,
+              animationDuration: `${b.duration}s`,
+              animationDelay: `${b.delay}s`,
             }}
           />
         ))}

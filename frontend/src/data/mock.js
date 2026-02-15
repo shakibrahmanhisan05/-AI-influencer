@@ -5,20 +5,22 @@ export const navLinks = [
   { label: 'Pricing', href: '#pricing' },
   { label: 'Integrations', href: '#integrations' },
   { label: 'Use Cases', href: '#use-cases' },
-  { label: 'Blog', href: '#blog' },
+  { label: 'Blog', href: '#' },
 ];
 
 export const heroChat = [
-  { type: 'user', text: 'Hey! Is the red hoodie still available in size M?' },
-  { type: 'ai', text: 'Yes! The Red Hoodie in M is in stock. It\'s $45 with free shipping. Want me to send you the order link?' },
-  { type: 'user', text: 'Yes please!' },
-  { type: 'ai', text: 'Here you go shop.link/hoodie-red-m — Use code VIBE10 for 10% off, valid today only!' },
+  { type: 'user', text: 'Hey! Is the red hoodie available in size M?' },
+  { type: 'ai', text: 'Yes! Red Hoodie (M) is in stock 🎉 It\'s $45 with free shipping.' },
+  { type: 'user', text: 'Can you send me the buy link?' },
+  { type: 'ai', text: 'Here you go 👉 shop.link/hoodie-red-m — Use VIBE10 for 10% off today only! 🔥' },
+  { type: 'user', text: 'Awesome, just ordered! Do you have matching joggers?' },
+  { type: 'ai', text: 'Great choice! 🙌 Yes — Matching Joggers (M) are $40. Here\'s the link: shop.link/joggers-red-m 💫' },
 ];
 
 export const heroBadges = [
-  { text: '247 DMs Replied Today', position: 'top-right' },
-  { text: '3 Sales While You Slept', position: 'bottom-left' },
-  { text: 'Inventory Checked', position: 'right-middle' },
+  { position: 'top-right', text: '247 DMs Replied Today' },
+  { position: 'bottom-left', text: '3 Sales While You Slept' },
+  { position: 'right-middle', text: 'Inventory Checked' },
 ];
 
 export const trustBadges = [
@@ -28,9 +30,9 @@ export const trustBadges = [
 ];
 
 export const socialProofStats = [
-  { label: 'messages automated', value: '10M+' },
-  { label: 'uptime', value: '99.9%' },
-  { label: 'revenue increase', value: 'Avg 3x' },
+  { value: '10M+', label: 'messages automated' },
+  { value: '99.9%', label: 'uptime' },
+  { value: '3x', label: 'avg revenue increase' },
 ];
 
 export const platforms = [
@@ -42,19 +44,27 @@ export const platforms = [
 ];
 
 export const problemPoints = [
-  'Customers text at 2AM, you miss them',
-  'Manually copy-paste same product info 100x/day',
-  'Sales lost because you forgot to post today\'s discount',
-  'No time to reply = followers unfollow',
-  'Glued to phone instead of creating content',
+  'Customers text at 2AM — you miss them and lose the sale.',
+  'I spend hours copy-pasting the same product info to every single DM.',
+  'I forgot to post about my flash sale and missed out on hundreds in revenue.',
+  'Followers DM me questions but I can\'t reply fast enough — they unfollow.',
+  'I\'m glued to my phone answering DMs instead of actually creating content.',
 ];
 
 export const solutionPoints = [
-  'AI replies to every DM instantly, 24/7 — in your voice',
-  'Customers get product info, pricing, and availability on demand',
-  'AI auto-posts your deals at peak times while you sleep',
-  'Every customer gets a response, no one slips through',
-  'You focus on content creation — AI handles the rest',
+  'AI replies to every DM instantly, 24/7 — even while you sleep.',
+  'Customers get product info, pricing, and buy links on demand — automatically.',
+  'AI auto-posts your deals and promos at peak times without you lifting a finger.',
+  'Every follower gets a response in seconds — no one slips through the cracks.',
+  'You focus on creating content — your AI handles the selling and support.',
+];
+
+export const metricsData = [
+  { value: 12000, suffix: '+', label: 'Influencers Using InfluenceAI' },
+  { value: 98, suffix: 'M+', label: 'Customer Messages Handled' },
+  { value: 3, suffix: 'x', label: 'Avg DM-to-Sale Conversion Lift' },
+  { value: 99.9, suffix: '%', label: 'Platform Uptime' },
+  { value: 3, prefix: '<', suffix: ' sec', label: 'Avg AI Reply Time' },
 ];
 
 export const coreFeatures = [
@@ -147,13 +157,48 @@ export const autoPostFlow = [
 ];
 
 export const channelIntegrations = [
-  { name: 'Instagram', subtitle: 'DMs + Comments + Story Mentions', color: '#E1306C' },
-  { name: 'WhatsApp Business', subtitle: 'Business API Integration', color: '#25D366' },
-  { name: 'Facebook Messenger', subtitle: 'Page Messages & Ads', color: '#0084FF' },
-  { name: 'TikTok DMs', subtitle: 'Direct Messages', color: '#FF0050' },
-  { name: 'Telegram', subtitle: 'Bot & Channel Integration', color: '#0088CC' },
-  { name: 'SMS', subtitle: 'via Twilio', color: '#F22F46' },
-  { name: 'Email', subtitle: 'via Mailchimp / Klaviyo', color: '#FFE01B' },
+  {
+    name: 'Instagram',
+    subtitle: 'DMs + Comments + Story Mentions',
+    color: '#E1306C',
+    features: ['Instant DM replies', 'Comment auto-responses', 'Story mention triggers'],
+  },
+  {
+    name: 'WhatsApp Business',
+    subtitle: 'Customer inquiries & order status',
+    color: '#25D366',
+    features: ['24/7 inquiry handling', 'Order status updates', 'Product catalog sharing'],
+  },
+  {
+    name: 'Facebook Messenger',
+    subtitle: 'Page messages & ad responses',
+    color: '#0084FF',
+    features: ['Page message automation', 'Ad response handling', 'Lead qualification'],
+  },
+  {
+    name: 'TikTok DMs',
+    subtitle: 'Direct messages & comment replies',
+    color: '#FF0050',
+    features: ['DM auto-replies', 'Comment engagement', 'Viral content responses'],
+  },
+  {
+    name: 'Telegram',
+    subtitle: 'Bot & channel integration',
+    color: '#0088CC',
+    features: ['Bot-powered replies', 'Channel announcements', 'Group moderation'],
+  },
+  {
+    name: 'SMS',
+    subtitle: 'Text message automation via Twilio',
+    color: '#F22F46',
+    features: ['Order confirmations', 'Promo text blasts', 'Two-way conversations'],
+  },
+  {
+    name: 'Email',
+    subtitle: 'Automated email via Mailchimp/Klaviyo',
+    color: '#FFE01B',
+    features: ['Welcome sequences', 'Abandoned cart recovery', 'Product announcements'],
+  },
 ];
 
 export const howItWorks = [
@@ -179,16 +224,37 @@ export const testimonials = [
     quote: 'I was manually answering 300+ DMs per day about my skincare line. Now my AI does it and I\'ve literally 3x\'d my sales because no one is getting left on read.',
     name: '@glowwithmia',
     details: '280K Instagram followers, Beauty Influencer',
+    avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=glowwithmia',
   },
   {
     quote: 'The Plus tier auto-posting feature is a game changer. I set up my product catalog on Sunday night and my AI posted about my merch drop every day that week. I woke up to 47 orders Monday morning.',
     name: '@fitwithjose',
     details: '190K TikTok, Fitness Creator',
+    avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=fitwithjose',
   },
   {
     quote: 'My customers used to wait 6-8 hours for a response from me. Now they get an answer in 3 seconds. My DM engagement went from 12% to 89%. This literally pays for itself in one sale.',
     name: '@thriftqueenrose',
     details: '95K Instagram, Thrift & Fashion Creator',
+    avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=thriftqueenrose',
+  },
+  {
+    quote: 'I was losing so many sales because people would DM me at midnight asking about sizes. InfluenceAI handles all of that now. My revenue jumped 40% in the first month.',
+    name: '@styledbynina',
+    details: '520K Instagram followers, Fashion & Lifestyle',
+    avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=styledbynina',
+  },
+  {
+    quote: 'The personality training is insane. My followers literally can\'t tell it\'s AI. It uses my catchphrases, my emojis, everything. It\'s like having a clone of me answering DMs.',
+    name: '@chaboricardo',
+    details: '340K YouTube, Tech & Gadgets Creator',
+    avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=chaboricardo',
+  },
+  {
+    quote: 'I run a coaching business and used to spend 3 hours a day just answering the same questions. Now my AI qualifies leads, answers FAQs, and books calls for me. Total game changer.',
+    name: '@coachwithleah',
+    details: '150K Instagram, Business Coach',
+    avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=coachwithleah',
   },
 ];
 
@@ -237,14 +303,6 @@ export const integrationLogos = [
   'Notion', 'Airtable', 'Twilio', 'Meta Business Suite',
 ];
 
-export const metricsData = [
-  { value: 12000, suffix: '+', label: 'Influencers Using InfluenceAI' },
-  { value: 98, suffix: 'M+', label: 'Customer Messages Handled by AI' },
-  { value: 3, suffix: 'x', label: 'Average DM-to-Sale Conversion Lift' },
-  { value: 99.9, suffix: '%', label: 'Platform Uptime' },
-  { value: 3, suffix: ' sec', label: 'Average AI Reply Time', prefix: 'Under ' },
-];
-
 export const footerLinks = {
   product: [
     { label: 'Features', href: '#features' },
@@ -254,11 +312,11 @@ export const footerLinks = {
     { label: 'Roadmap', href: '#' },
   ],
   useCases: [
-    { label: 'For Fashion Influencers', href: '#' },
-    { label: 'For Fitness Creators', href: '#' },
-    { label: 'For Beauty', href: '#' },
-    { label: 'For Merch Sellers', href: '#' },
-    { label: 'For Coaches', href: '#' },
+    { label: 'For Fashion Influencers', href: '#use-cases' },
+    { label: 'For Fitness Creators', href: '#use-cases' },
+    { label: 'For Beauty', href: '#use-cases' },
+    { label: 'For Merch Sellers', href: '#use-cases' },
+    { label: 'For Coaches', href: '#use-cases' },
   ],
   company: [
     { label: 'About', href: '#' },

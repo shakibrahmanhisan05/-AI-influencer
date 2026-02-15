@@ -26,6 +26,10 @@ export const ChannelIntegrations = () => {
           transition={{ duration: 0.5 }}
           className="text-center mb-16"
         >
+          <div className="inline-flex items-center gap-2 bg-white/5 border border-white/10 rounded-full px-4 py-1.5 mb-5">
+            <Wifi className="w-3.5 h-3.5 text-[#10B981]" />
+            <span className="text-sm font-medium text-white/60">CHANNELS</span>
+          </div>
           <h2 className="font-display font-bold text-3xl lg:text-[48px] leading-tight text-white mb-4">
             Works Where Your Followers Already Are
           </h2>
@@ -51,15 +55,16 @@ export const ChannelIntegrations = () => {
                 <h4 className="font-semibold text-sm text-white mb-1">{channel.name}</h4>
                 <p className="text-xs text-[#94A3B8] leading-snug">{channel.subtitle}</p>
                 
-                {/* Hover detail */}
+                {/* Hover detail with features */}
                 <div className="absolute inset-0 rounded-2xl bg-[#0F0F1A]/95 backdrop-blur-xl flex flex-col items-center justify-center p-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                  <div className="w-8 h-8 rounded-lg mb-2 flex items-center justify-center" style={{ backgroundColor: `${channel.color}20` }}>
-                    <Wifi className="w-4 h-4" style={{ color: channel.color }} />
-                  </div>
-                  <p className="text-xs text-white font-medium mb-1">Automated on {channel.name.split(' ')[0]}</p>
-                  <div className="flex items-center gap-1 text-xs text-[#10B981]">
-                    <Check className="w-3 h-3" />
-                    <span>AI replies active</span>
+                  <p className="text-xs text-white font-semibold mb-3">Automated on {channel.name}</p>
+                  <div className="space-y-1.5">
+                    {channel.features.map((f, fi) => (
+                      <div key={fi} className="flex items-center gap-1.5 text-xs text-[#10B981]">
+                        <Check className="w-3 h-3 shrink-0" />
+                        <span>{f}</span>
+                      </div>
+                    ))}
                   </div>
                 </div>
               </motion.div>

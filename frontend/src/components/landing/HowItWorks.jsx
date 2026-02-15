@@ -1,7 +1,7 @@
 import { useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
 import { howItWorks } from '../../data/mock';
-import { Link2, FileText, Power, Check, ArrowRight } from 'lucide-react';
+import { Link2, FileText, Power, Check, ArrowRight, Zap } from 'lucide-react';
 
 const stepIcons = [Link2, FileText, Power];
 const stepColors = ['#7C3AED', '#F43F5E', '#10B981'];
@@ -19,6 +19,10 @@ export const HowItWorks = () => {
           transition={{ duration: 0.5 }}
           className="text-center mb-16"
         >
+          <div className="inline-flex items-center gap-2 bg-white/5 border border-white/10 rounded-full px-4 py-1.5 mb-5">
+            <Zap className="w-3.5 h-3.5 text-[#F43F5E]" />
+            <span className="text-sm font-medium text-white/60">SETUP</span>
+          </div>
           <h2 className="font-display font-bold text-3xl lg:text-[48px] leading-tight text-white mb-4">
             Up & Running in 3 Simple Steps
           </h2>

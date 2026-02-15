@@ -1,19 +1,19 @@
 import { useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
-import { plusFeatures, autoPostFlow } from '../../data/mock';
-import { Crown, Calendar, ShoppingBag, Percent, TrendingUp, Package, BarChart3, ArrowRight, ChevronRight } from 'lucide-react';
+import { plusFeatures } from '../../data/mock';
+import { Crown, Calendar, ShoppingBag, Percent, TrendingUp, Package, BarChart3, Cpu, Clock, Share2, Eye, MessageSquare, Bot, ShoppingCart, ArrowRight } from 'lucide-react';
 
 const cardIcons = [Calendar, ShoppingBag, Percent, TrendingUp, Package, BarChart3];
 
-const flowIcons = [
-  ShoppingBag, // catalog
-  null, // AI writes
-  Calendar, // picks time
-  null, // published
-  null, // customer sees
-  null, // customer dms
-  null, // AI replies
-  Crown, // sale
+const flowSteps = [
+  { label: 'Your Catalog', icon: ShoppingBag, color: '#7C3AED' },
+  { label: 'AI Writes Post', icon: Cpu, color: '#8B5CF6' },
+  { label: 'Best Time Picked', icon: Clock, color: '#A78BFA' },
+  { label: 'Auto-Published', icon: Share2, color: '#F43F5E' },
+  { label: 'Customer Sees It', icon: Eye, color: '#FB7185' },
+  { label: 'Customer DMs', icon: MessageSquare, color: '#F59E0B' },
+  { label: 'AI Replies', icon: Bot, color: '#10B981' },
+  { label: 'Sale Made 🎉', icon: ShoppingCart, color: '#34D399' },
 ];
 
 export const PlusTier = () => {
@@ -68,27 +68,43 @@ export const PlusTier = () => {
           })}
         </div>
 
-        {/* Auto-post flow */}
+        {/* Auto-post flow — upgraded */}
         <motion.div
           initial={{ opacity: 0, y: 25 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ delay: 0.6, duration: 0.5 }}
-          className="mt-16 overflow-x-auto pb-4"
+          className="mt-16"
         >
-          <div className="flex items-center justify-center gap-2 min-w-max px-4">
-            {autoPostFlow.map((step, i) => (
-              <div key={i} className="flex items-center gap-2">
-                <div className="flex flex-col items-center gap-2">
-                  <div className="w-12 h-12 rounded-xl bg-[#7C3AED]/10 border border-[#7C3AED]/20 flex items-center justify-center">
-                    <span className="text-xs font-bold text-[#7C3AED]">{i + 1}</span>
+          <div className="rounded-2xl border border-[#7C3AED]/15 bg-gradient-to-r from-[#7C3AED]/5 via-[#F43F5E]/5 to-[#10B981]/5 p-6 lg:p-8 overflow-x-auto">
+            <p className="text-center text-sm text-white/50 mb-6 font-medium uppercase tracking-wider">The Auto-Post Flow</p>
+            <div className="flex items-center justify-center gap-1 min-w-max px-4">
+              {flowSteps.map((step, i) => {
+                const Icon = step.icon;
+                return (
+                  <div key={i} className="flex items-center gap-1">
+                    <div className="flex flex-col items-center gap-2.5">
+                      <div
+                        className="w-14 h-14 rounded-xl flex items-center justify-center border transition-all duration-300"
+                        style={{
+                          backgroundColor: `${step.color}15`,
+                          borderColor: `${step.color}30`,
+                        }}
+                      >
+                        <Icon className="w-6 h-6" style={{ color: step.color }} />
+                      </div>
+                      <span className="text-xs text-[#94A3B8] max-w-[80px] text-center leading-tight font-medium">
+                        {step.label}
+                      </span>
+                    </div>
+                    {i < flowSteps.length - 1 && (
+                      <div className="mb-6 mx-1">
+                        <ArrowRight className="w-4 h-4 text-[#7C3AED]/40 animate-pulse" />
+                      </div>
+                    )}
                   </div>
-                  <span className="text-xs text-[#94A3B8] max-w-[80px] text-center leading-tight">{step}</span>
-                </div>
-                {i < autoPostFlow.length - 1 && (
-                  <ChevronRight className="w-4 h-4 text-[#7C3AED]/40 mb-6" />
-                )}
-              </div>
-            ))}
+                );
+              })}
+            </div>
           </div>
         </motion.div>
       </div>
