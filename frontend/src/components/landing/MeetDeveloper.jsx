@@ -20,7 +20,7 @@ export const MeetDeveloper = () => {
             <h2 className="font-display font-bold text-3xl lg:text-[42px] leading-tight text-white mb-3">
               Built By a Developer Who Means It
             </h2>
-            <p className="text-[#94A3B8] text-base">The mind behind InfluenceAI</p>
+            <p className="text-[#94A3B8] text-base">The hands that brought the vision to life</p>
           </div>
 
           {/* Developer card */}
