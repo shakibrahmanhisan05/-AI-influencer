@@ -57,6 +57,13 @@ const FloatingBadge = ({ badge, index }) => {
 
 export const HeroSection = () => {
   const [demoOpen, setDemoOpen] = useState(false);
+  const [videoKey, setVideoKey] = useState(0);
+
+  // Close function — stops the video by remounting the iframe
+  const handleCloseDemo = () => {
+    setDemoOpen(false);
+    setVideoKey(prev => prev + 1); // forces iframe to unmount → video stops
+  };
 
   return (
     <>
@@ -199,7 +206,7 @@ export const HeroSection = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            onClick={() => setDemoOpen(false)}
+            onClick={handleCloseDemo}
             className="fixed inset-0 z-[100] bg-black/90 backdrop-blur-xl flex items-center justify-center p-6"
           >
             <motion.div
@@ -207,24 +214,42 @@ export const HeroSection = () => {
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.9, opacity: 0 }}
               onClick={(e) => e.stopPropagation()}
-              className="relative w-full max-w-4xl rounded-2xl overflow-hidden border border-white/10 shadow-2xl bg-[#111118]"
+              className="relative w-full max-w-5xl rounded-2xl overflow-hidden border border-white/10 shadow-2xl bg-[#111118]"
             >
-              {/* Close button */}
-              <button
-                onClick={() => setDemoOpen(false)}
-                className="absolute top-4 right-4 z-10 w-9 h-9 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/20 transition-colors"
-              >
-                <X className="w-5 h-5 text-white" />
-              </button>
-              {/* Video placeholder */}
-              <div className="aspect-video bg-[#0A0A0F] flex items-center justify-center">
-                <div className="text-center">
-                  <div className="w-20 h-20 rounded-full bg-gradient-to-br from-[#7C3AED] to-[#F43F5E] flex items-center justify-center mx-auto mb-4">
-                    <Play className="w-8 h-8 text-white ml-1" />
+              {/* Modal title bar */}
+              <div className="flex items-center justify-between px-5 py-3 border-b border-white/[0.08] bg-[#111118]">
+                <div className="flex items-center gap-2.5">
+                  <div className="w-7 h-7 rounded-lg bg-gradient-to-br from-[#7C3AED] to-[#F43F5E] flex items-center justify-center">
+                    <Play className="w-3.5 h-3.5 text-white ml-0.5" />
                   </div>
-                  <p className="text-white/60 text-sm">Demo video coming soon</p>
-                  <p className="text-white/30 text-xs mt-1">Replace this with your YouTube or Loom embed</p>
+                  <span className="text-sm font-semibold text-white">InfluenceAI — 2 Minute Demo</span>
                 </div>
+                <button
+                  onClick={handleCloseDemo}
+                  className="w-8 h-8 rounded-full bg-white/[0.06] flex items-center justify-center hover:bg-white/[0.12] transition-colors"
+                >
+                  <X className="w-4 h-4 text-white/60" />
+                </button>
+              </div>
+
+              {/* Video with loading skeleton */}
+              <div className="relative aspect-video bg-[#0A0A0F]">
+                {/* Loading skeleton */}
+                <div className="absolute inset-0 bg-[#0A0A0F] flex items-center justify-center z-0">
+                  <div className="w-16 h-16 rounded-full bg-gradient-to-br from-[#7C3AED]/30 to-[#F43F5E]/30 flex items-center justify-center animate-pulse">
+                    <Play className="w-6 h-6 text-white/40 ml-1" />
+                  </div>
+                </div>
+                {/* Actual YouTube iframe on top */}
+                <iframe
+                  key={videoKey}
+                  src="https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1&rel=0&modestbranding=1&color=white"
+                  title="InfluenceAI Demo"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  allowFullScreen
+                  className="absolute inset-0 w-full h-full z-10"
+                  style={{ border: 'none' }}
+                />
               </div>
             </motion.div>
           </motion.div>
