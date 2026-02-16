@@ -1,7 +1,7 @@
 import { useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
-import { howItWorks } from '../../data/mock';
-import { Link2, FileText, Power, Check, ArrowRight, Zap } from 'lucide-react';
+import { Link2, FileText, Power, Zap } from 'lucide-react';
+import { useT } from '../../hooks/useT';
 
 const stepIcons = [Link2, FileText, Power];
 const stepColors = ['#7C3AED', '#F43F5E', '#10B981'];
@@ -9,6 +9,7 @@ const stepColors = ['#7C3AED', '#F43F5E', '#10B981'];
 export const HowItWorks = () => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-80px' });
+  const t = useT();
 
   return (
     <section className="relative py-24 lg:py-32" id="how-it-works">
@@ -19,17 +20,17 @@ export const HowItWorks = () => {
           transition={{ duration: 0.5 }}
           className="text-center mb-16"
         >
-          <div className="inline-flex items-center gap-2 bg-white/5 border border-white/10 rounded-full px-4 py-1.5 mb-5">
+          <div className="inline-flex items-center gap-2 border rounded-full px-4 py-1.5 mb-5" style={{ backgroundColor: 'var(--bg-card)', borderColor: 'var(--border-subtle)' }}>
             <Zap className="w-3.5 h-3.5 text-[#F43F5E]" />
-            <span className="text-sm font-medium text-white/60">SETUP</span>
+            <span className="text-sm font-medium" style={{ color: 'var(--text-muted)' }}>{t.howItWorks.eyebrow}</span>
           </div>
-          <h2 className="font-display font-bold text-3xl lg:text-[48px] leading-tight text-white mb-4">
-            Up & Running in 3 Simple Steps
+          <h2 className="font-display font-bold text-3xl lg:text-[48px] leading-tight mb-4" style={{ color: 'var(--text-primary)' }}>
+            {t.howItWorks.sectionTitle}
           </h2>
         </motion.div>
 
         <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
-          {howItWorks.map((step, i) => {
+          {t.howItWorks.steps.map((step, i) => {
             const Icon = stepIcons[i];
             const color = stepColors[i];
             return (
@@ -40,13 +41,12 @@ export const HowItWorks = () => {
                 transition={{ delay: 0.1 + i * 0.15, duration: 0.5 }}
                 className="relative"
               >
-                {/* Connector line (not on last) */}
+                {/* Connector line */}
                 {i < 2 && (
-                  <div className="hidden md:block absolute top-12 left-[calc(50%+40px)] w-[calc(100%-80px)] h-px bg-gradient-to-r from-white/10 to-white/5" />
+                  <div className="hidden md:block absolute top-12 left-[calc(50%+40px)] w-[calc(100%-80px)] h-px bg-gradient-to-r" style={{ backgroundImage: 'linear-gradient(to right, var(--border-subtle), transparent)' }} />
                 )}
 
                 <div className="text-center">
-                  {/* Step number + icon */}
                   <div className="relative mx-auto mb-6">
                     <div
                       className="w-20 h-20 rounded-2xl mx-auto flex items-center justify-center border transition-all duration-300"
@@ -65,8 +65,8 @@ export const HowItWorks = () => {
                     </div>
                   </div>
 
-                  <h3 className="font-display font-bold text-xl text-white mb-3">{step.title}</h3>
-                  <p className="text-[#94A3B8] text-sm leading-relaxed max-w-xs mx-auto">{step.description}</p>
+                  <h3 className="font-display font-bold text-xl mb-3" style={{ color: 'var(--text-primary)' }}>{step.title}</h3>
+                  <p className="text-sm leading-relaxed max-w-xs mx-auto" style={{ color: 'var(--text-secondary)' }}>{step.description}</p>
                 </div>
               </motion.div>
             );

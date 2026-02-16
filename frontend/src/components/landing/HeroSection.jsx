@@ -1,7 +1,8 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { heroChat, heroBadges, trustBadges } from '../../data/mock';
+import { heroChat, heroBadges } from '../../data/mock';
 import { Play, CheckCircle, MessageSquare, ShoppingBag, PackageCheck, Sparkles, Bot, X } from 'lucide-react';
+import { useT } from '../../hooks/useT';
 
 const badgeIcons = {
   'top-right': MessageSquare,
@@ -21,9 +22,14 @@ const ChatBubble = ({ message, index }) => {
       <div
         className={`max-w-[85%] px-4 py-2.5 rounded-2xl text-sm leading-relaxed ${
           isAI
-            ? 'bg-gradient-to-br from-[#7C3AED]/30 to-[#7C3AED]/10 text-white border border-[#7C3AED]/20'
-            : 'bg-white/10 text-white/90 border border-white/10'
+            ? 'bg-gradient-to-br from-[#7C3AED]/30 to-[#7C3AED]/10 border border-[#7C3AED]/20'
+            : 'border'
         }`}
+        style={{
+          color: isAI ? 'var(--text-primary)' : 'var(--text-secondary)',
+          backgroundColor: isAI ? undefined : 'var(--bg-card)',
+          borderColor: isAI ? undefined : 'var(--border-subtle)',
+        }}
       >
         {isAI && <Bot className="w-3.5 h-3.5 text-[#7C3AED] mb-1 inline-block mr-1.5" />}
         {message.text}
@@ -45,12 +51,13 @@ const FloatingBadge = ({ badge, index }) => {
       initial={{ opacity: 0, scale: 0.8 }}
       animate={{ opacity: 1, scale: 1 }}
       transition={{ delay: 2 + index * 0.4, duration: 0.5 }}
-      className={`absolute ${posClasses[badge.position]} z-20 bg-[#0F0F1A]/90 backdrop-blur-xl border border-white/10 rounded-xl px-4 py-2.5 flex items-center gap-2.5 shadow-2xl`}
+      className={`absolute ${posClasses[badge.position]} z-20 backdrop-blur-xl border rounded-xl px-4 py-2.5 flex items-center gap-2.5 shadow-2xl`}
+      style={{ backgroundColor: 'var(--bg-card)', borderColor: 'var(--border-subtle)' }}
     >
       <div className="w-8 h-8 rounded-lg bg-[#10B981]/15 flex items-center justify-center">
         <Icon className="w-4 h-4 text-[#10B981]" />
       </div>
-      <span className="text-xs font-semibold text-white whitespace-nowrap">{badge.text}</span>
+      <span className="text-xs font-semibold whitespace-nowrap" style={{ color: 'var(--text-primary)' }}>{badge.text}</span>
     </motion.div>
   );
 };
@@ -58,12 +65,14 @@ const FloatingBadge = ({ badge, index }) => {
 export const HeroSection = () => {
   const [demoOpen, setDemoOpen] = useState(false);
   const [videoKey, setVideoKey] = useState(0);
+  const t = useT();
 
-  // Close function — stops the video by remounting the iframe
   const handleCloseDemo = () => {
     setDemoOpen(false);
-    setVideoKey(prev => prev + 1); // forces iframe to unmount → video stops
+    setVideoKey(prev => prev + 1);
   };
+
+  const trustBadgesArr = [t.hero.trust1, t.hero.trust2, t.hero.trust3];
 
   return (
     <>
@@ -84,27 +93,27 @@ export const HeroSection = () => {
               transition={{ duration: 0.7 }}
             >
               {/* Eyebrow badge */}
-              <div className="inline-flex items-center gap-2.5 bg-white/5 border border-white/10 rounded-full px-4 py-2 mb-8">
+              <div className="inline-flex items-center gap-2.5 border rounded-full px-4 py-2 mb-8" style={{ backgroundColor: 'var(--bg-card)', borderColor: 'var(--border-subtle)' }}>
                 <span className="relative flex h-2.5 w-2.5">
                   <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#10B981] opacity-75" />
                   <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-[#10B981]" />
                 </span>
-                <span className="text-sm font-medium text-[#10B981]">AI Agent — Always Online</span>
+                <span className="text-sm font-medium text-[#10B981]">{t.hero.eyebrow}</span>
               </div>
 
               {/* Headline */}
-              <h1 className="font-display font-extrabold text-[42px] sm:text-[56px] lg:text-[72px] xl:text-[80px] leading-[1.05] tracking-tight text-white mb-6">
-                Your AI Handles{' '}
+              <h1 className="font-display font-extrabold text-[42px] sm:text-[56px] lg:text-[72px] xl:text-[80px] leading-[1.05] tracking-tight mb-6" style={{ color: 'var(--text-primary)' }}>
+                {t.hero.headline1}{' '}
                 <span className="bg-gradient-to-r from-[#7C3AED] to-[#F43F5E] bg-clip-text text-transparent">
-                  Every DM.
+                  {t.hero.headlineHighlight}
                 </span>
                 <br />
-                You Handle the Fame.
+                {t.hero.headline2}
               </h1>
 
               {/* Subheadline */}
-              <p className="text-lg lg:text-xl text-[#94A3B8] max-w-xl leading-relaxed mb-10">
-                InfluenceAI gives social influencers a 24/7 AI agent that replies to customer messages, checks product availability, answers questions, and auto-posts your deals — so you never lose a sale while you sleep.
+              <p className="text-lg lg:text-xl max-w-xl leading-relaxed mb-10" style={{ color: 'var(--text-secondary)' }}>
+                {t.hero.subheadline}
               </p>
 
               {/* CTAs */}
@@ -114,27 +123,28 @@ export const HeroSection = () => {
                   className="group relative inline-flex items-center gap-2.5 bg-gradient-to-r from-[#7C3AED] to-[#F43F5E] text-white font-semibold text-base px-8 py-4 rounded-full overflow-hidden transition-shadow duration-400 hover:shadow-[0_0_40px_rgba(124,58,237,0.5)]"
                 >
                   <span className="absolute inset-0 shimmer-effect" />
-                  <span className="relative z-10">Get Started Free</span>
+                  <span className="relative z-10">{t.hero.ctaPrimary}</span>
                   <Sparkles className="w-5 h-5 relative z-10" />
                 </a>
                 <button
                   onClick={() => setDemoOpen(true)}
-                  className="group inline-flex items-center gap-2 text-white/70 hover:text-white font-medium text-base transition-colors duration-300"
+                  className="group inline-flex items-center gap-2 font-medium text-base transition-colors duration-300"
+                  style={{ color: 'var(--text-muted)' }}
                 >
-                  <div className="w-9 h-9 rounded-full bg-white/10 border border-white/20 flex items-center justify-center group-hover:bg-white/15 transition-colors duration-300">
-                    <Play className="w-4 h-4 ml-0.5" />
+                  <div className="w-9 h-9 rounded-full border flex items-center justify-center transition-colors duration-300" style={{ backgroundColor: 'var(--bg-card)', borderColor: 'var(--border-subtle)' }}>
+                    <Play className="w-4 h-4 ml-0.5" style={{ color: 'var(--text-primary)' }} />
                   </div>
                   <span className="relative">
-                    Watch 2-Min Demo
-                    <span className="absolute bottom-0 left-0 w-0 h-px bg-white group-hover:w-full transition-all duration-400" />
+                    {t.hero.ctaDemo}
+                    <span className="absolute bottom-0 left-0 w-0 h-px bg-current group-hover:w-full transition-all duration-400" />
                   </span>
                 </button>
               </div>
 
               {/* Trust badges */}
               <div className="flex flex-wrap items-center gap-x-6 gap-y-2">
-                {trustBadges.map((badge) => (
-                  <div key={badge} className="flex items-center gap-2 text-sm text-[#94A3B8]">
+                {trustBadgesArr.map((badge) => (
+                  <div key={badge} className="flex items-center gap-2 text-sm" style={{ color: 'var(--text-secondary)' }}>
                     <CheckCircle className="w-4 h-4 text-[#10B981]" />
                     {badge}
                   </div>
@@ -154,17 +164,24 @@ export const HeroSection = () => {
 
               {/* Phone */}
               <div className="relative animate-float">
-                <div className="relative w-[280px] sm:w-[300px] bg-[#111118]/90 backdrop-blur-xl rounded-[36px] border border-white/10 p-5 shadow-2xl shadow-[#7C3AED]/10">
+                <div
+                  className="relative w-[280px] sm:w-[300px] backdrop-blur-xl rounded-[36px] border p-5 shadow-2xl"
+                  style={{
+                    backgroundColor: 'var(--phone-bg)',
+                    borderColor: 'var(--phone-border)',
+                    boxShadow: 'var(--shadow-card)',
+                  }}
+                >
                   {/* Phone header */}
-                  <div className="flex items-center gap-2.5 mb-5 pb-3 border-b border-white/8">
+                  <div className="flex items-center gap-2.5 mb-5 pb-3 border-b" style={{ borderColor: 'var(--border-subtle)' }}>
                     <div className="w-8 h-8 rounded-full bg-gradient-to-br from-[#7C3AED] to-[#F43F5E] flex items-center justify-center">
                       <Bot className="w-4 h-4 text-white" />
                     </div>
                     <div>
-                      <p className="text-sm font-semibold text-white">InfluenceAI</p>
+                      <p className="text-sm font-semibold" style={{ color: 'var(--text-primary)' }}>InfluenceAI</p>
                       <p className="text-xs text-[#10B981] flex items-center gap-1">
                         <span className="w-1.5 h-1.5 rounded-full bg-[#10B981]" />
-                        Online
+                        {t.hero.onlineBadge}
                       </p>
                     </div>
                   </div>
@@ -214,33 +231,33 @@ export const HeroSection = () => {
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.9, opacity: 0 }}
               onClick={(e) => e.stopPropagation()}
-              className="relative w-full max-w-5xl rounded-2xl overflow-hidden border border-white/10 shadow-2xl bg-[#111118]"
+              className="relative w-full max-w-5xl rounded-2xl overflow-hidden border shadow-2xl"
+              style={{ borderColor: 'var(--border-subtle)', backgroundColor: 'var(--bg-strip)' }}
             >
               {/* Modal title bar */}
-              <div className="flex items-center justify-between px-5 py-3 border-b border-white/[0.08] bg-[#111118]">
+              <div className="flex items-center justify-between px-5 py-3 border-b" style={{ borderColor: 'var(--border-subtle)', backgroundColor: 'var(--bg-strip)' }}>
                 <div className="flex items-center gap-2.5">
                   <div className="w-7 h-7 rounded-lg bg-gradient-to-br from-[#7C3AED] to-[#F43F5E] flex items-center justify-center">
                     <Play className="w-3.5 h-3.5 text-white ml-0.5" />
                   </div>
-                  <span className="text-sm font-semibold text-white">InfluenceAI — 2 Minute Demo</span>
+                  <span className="text-sm font-semibold" style={{ color: 'var(--text-primary)' }}>{t.hero.demoModalTitle}</span>
                 </div>
                 <button
                   onClick={handleCloseDemo}
-                  className="w-8 h-8 rounded-full bg-white/[0.06] flex items-center justify-center hover:bg-white/[0.12] transition-colors"
+                  className="w-8 h-8 rounded-full flex items-center justify-center transition-colors"
+                  style={{ backgroundColor: 'var(--bg-card)' }}
                 >
-                  <X className="w-4 h-4 text-white/60" />
+                  <X className="w-4 h-4" style={{ color: 'var(--text-muted)' }} />
                 </button>
               </div>
 
-              {/* Video with loading skeleton */}
-              <div className="relative aspect-video bg-[#0A0A0F]">
-                {/* Loading skeleton */}
-                <div className="absolute inset-0 bg-[#0A0A0F] flex items-center justify-center z-0">
+              {/* Video */}
+              <div className="relative aspect-video" style={{ backgroundColor: 'var(--bg-primary)' }}>
+                <div className="absolute inset-0 flex items-center justify-center z-0" style={{ backgroundColor: 'var(--bg-primary)' }}>
                   <div className="w-16 h-16 rounded-full bg-gradient-to-br from-[#7C3AED]/30 to-[#F43F5E]/30 flex items-center justify-center animate-pulse">
-                    <Play className="w-6 h-6 text-white/40 ml-1" />
+                    <Play className="w-6 h-6 ml-1" style={{ color: 'var(--text-muted)' }} />
                   </div>
                 </div>
-                {/* Actual YouTube iframe on top */}
                 <iframe
                   key={videoKey}
                   src="https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1&rel=0&modestbranding=1&color=white"

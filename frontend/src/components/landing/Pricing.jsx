@@ -1,18 +1,20 @@
 import { useRef, useState } from 'react';
 import { motion, useInView } from 'framer-motion';
-import { corePlanFeatures, corePlanExcluded, plusPlanFeatures, pricingFAQ } from '../../data/mock';
-import { Check, X, Crown, Sparkles, ChevronDown } from 'lucide-react';
+import { corePlanFeatures, corePlanExcluded, plusPlanFeatures } from '../../data/mock';
+import { Check, X, Crown, Sparkles } from 'lucide-react';
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
 } from '../ui/accordion';
+import { useT } from '../../hooks/useT';
 
 export const Pricing = () => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-80px' });
   const [annual, setAnnual] = useState(true);
+  const t = useT();
 
   return (
     <section className="relative py-24 lg:py-32" id="pricing">
@@ -23,26 +25,28 @@ export const Pricing = () => {
           transition={{ duration: 0.5 }}
           className="text-center mb-14"
         >
-          <h2 className="font-display font-bold text-3xl lg:text-[48px] leading-tight text-white mb-4">
-            Simple, Creator-Friendly Pricing
+          <h2 className="font-display font-bold text-3xl lg:text-[48px] leading-tight mb-4" style={{ color: 'var(--text-primary)' }}>
+            {t.pricing.sectionTitle}
           </h2>
-          <p className="text-[#94A3B8] text-lg mb-8">
-            Start free. Upgrade when you're ready to go Plus.
+          <p className="text-lg mb-8" style={{ color: 'var(--text-secondary)' }}>
+            {t.pricing.subtitle}
           </p>
 
           {/* Toggle */}
-          <div className="inline-flex items-center gap-3 bg-white/[0.04] border border-white/10 rounded-full p-1">
+          <div className="inline-flex items-center gap-3 border rounded-full p-1" style={{ backgroundColor: 'var(--bg-card)', borderColor: 'var(--border-subtle)' }}>
             <button
               onClick={() => setAnnual(false)}
-              className={`px-5 py-2 rounded-full text-sm font-medium transition-all duration-300 ${!annual ? 'bg-white/10 text-white' : 'text-[#94A3B8]'}`}
+              className={`px-5 py-2 rounded-full text-sm font-medium transition-all duration-300`}
+              style={!annual ? { backgroundColor: 'var(--bg-card-hover)', color: 'var(--text-primary)' } : { color: 'var(--text-secondary)' }}
             >
-              Monthly
+              {t.pricing.monthly}
             </button>
             <button
               onClick={() => setAnnual(true)}
-              className={`px-5 py-2 rounded-full text-sm font-medium transition-all duration-300 ${annual ? 'bg-white/10 text-white' : 'text-[#94A3B8]'}`}
+              className={`px-5 py-2 rounded-full text-sm font-medium transition-all duration-300`}
+              style={annual ? { backgroundColor: 'var(--bg-card-hover)', color: 'var(--text-primary)' } : { color: 'var(--text-secondary)' }}
             >
-              Annual <span className="text-[#10B981] text-xs ml-1">Save 34%</span>
+              {t.pricing.annual} <span className="text-[#10B981] text-xs ml-1">{t.pricing.save}</span>
             </button>
           </div>
         </motion.div>
@@ -53,32 +57,34 @@ export const Pricing = () => {
             initial={{ opacity: 0, y: 25 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
             transition={{ delay: 0.1, duration: 0.5 }}
-            className="rounded-2xl border border-white/[0.08] bg-white/[0.03] backdrop-blur-xl p-8"
+            className="rounded-2xl border backdrop-blur-xl p-8"
+            style={{ backgroundColor: 'var(--bg-card)', borderColor: 'var(--border-subtle)' }}
           >
-            <h3 className="font-display font-bold text-xl text-white mb-1">Core</h3>
-            <p className="text-sm text-[#94A3B8] mb-6">Get started for free</p>
+            <h3 className="font-display font-bold text-xl mb-1" style={{ color: 'var(--text-primary)' }}>{t.pricing.coreName}</h3>
+            <p className="text-sm mb-6" style={{ color: 'var(--text-secondary)' }}>{t.pricing.coreTagline}</p>
             <div className="flex items-baseline gap-1 mb-8">
-              <span className="font-display font-extrabold text-4xl text-white">$0</span>
-              <span className="text-[#94A3B8] text-sm">/month, Forever Free</span>
+              <span className="font-display font-extrabold text-4xl" style={{ color: 'var(--text-primary)' }}>{t.pricing.corePrice}</span>
+              <span className="text-sm" style={{ color: 'var(--text-secondary)' }}>{t.pricing.corePeriod}</span>
             </div>
             <a
               href="#"
-              className="block w-full text-center text-sm font-semibold text-white border border-white/20 hover:border-white/40 rounded-full py-3 transition-all duration-300 mb-8"
+              className="block w-full text-center text-sm font-semibold border rounded-full py-3 transition-all duration-300 mb-8"
+              style={{ color: 'var(--text-primary)', borderColor: 'var(--border-subtle)' }}
             >
-              Start for Free
+              {t.pricing.coreCTA}
             </a>
             <div className="space-y-3">
               {corePlanFeatures.map((f, i) => (
                 <div key={i} className="flex items-start gap-2.5">
                   <Check className="w-4 h-4 text-[#10B981] mt-0.5 shrink-0" />
-                  <span className="text-sm text-[#94A3B8]">{f}</span>
+                  <span className="text-sm" style={{ color: 'var(--text-secondary)' }}>{f}</span>
                 </div>
               ))}
-              <div className="pt-3 border-t border-white/[0.06]">
+              <div className="pt-3 border-t" style={{ borderColor: 'var(--border-subtle)' }}>
                 {corePlanExcluded.map((f, i) => (
                   <div key={i} className="flex items-start gap-2.5 mt-3">
-                    <X className="w-4 h-4 text-white/20 mt-0.5 shrink-0" />
-                    <span className="text-sm text-white/30">{f}</span>
+                    <X className="w-4 h-4 mt-0.5 shrink-0" style={{ color: 'var(--text-placeholder)' }} />
+                    <span className="text-sm" style={{ color: 'var(--text-placeholder)' }}>{f}</span>
                   </div>
                 ))}
               </div>
@@ -90,26 +96,27 @@ export const Pricing = () => {
             initial={{ opacity: 0, y: 25 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
             transition={{ delay: 0.2, duration: 0.5 }}
-            className="relative rounded-2xl border border-[#7C3AED]/30 bg-white/[0.04] backdrop-blur-xl p-8 shadow-[0_0_60px_rgba(124,58,237,0.08)]"
+            className="relative rounded-2xl border border-[#7C3AED]/30 backdrop-blur-xl p-8 shadow-[0_0_60px_rgba(124,58,237,0.08)]"
+            style={{ backgroundColor: 'var(--bg-card)' }}
           >
             {/* Most Popular badge */}
             <div className="absolute -top-3.5 left-1/2 -translate-x-1/2">
               <div className="inline-flex items-center gap-1.5 bg-gradient-to-r from-[#7C3AED] to-[#F43F5E] rounded-full px-4 py-1.5">
                 <Crown className="w-3.5 h-3.5 text-white" />
-                <span className="text-xs font-bold text-white">Most Popular</span>
+                <span className="text-xs font-bold text-white">{t.pricing.mostPopular}</span>
               </div>
             </div>
 
-            <h3 className="font-display font-bold text-xl text-white mb-1 mt-2">Plus</h3>
-            <p className="text-sm text-[#94A3B8] mb-6">Everything you need to grow</p>
+            <h3 className="font-display font-bold text-xl mb-1 mt-2" style={{ color: 'var(--text-primary)' }}>{t.pricing.plusName}</h3>
+            <p className="text-sm mb-6" style={{ color: 'var(--text-secondary)' }}>{t.pricing.plusTagline}</p>
             <div className="flex items-baseline gap-1 mb-2">
-              <span className="font-display font-extrabold text-4xl text-white">
-                ${annual ? '19' : '29'}
+              <span className="font-display font-extrabold text-4xl" style={{ color: 'var(--text-primary)' }}>
+                {annual ? t.pricing.plusPriceAnnual : t.pricing.plusPriceMonthly}
               </span>
-              <span className="text-[#94A3B8] text-sm">/month{annual ? ', billed annually' : ''}</span>
+              <span className="text-sm" style={{ color: 'var(--text-secondary)' }}>{annual ? t.pricing.plusPeriodAnnual : t.pricing.plusPeriodMonthly}</span>
             </div>
-            {annual && <p className="text-xs text-[#10B981] mb-6">Save 34% with annual billing</p>}
-            {!annual && <p className="text-xs text-[#94A3B8] mb-6">or $19/month billed annually</p>}
+            {annual && <p className="text-xs text-[#10B981] mb-6">{t.pricing.plusSaveNote}</p>}
+            {!annual && <p className="text-xs mb-6" style={{ color: 'var(--text-secondary)' }}>{t.pricing.plusAnnualAlt}</p>}
 
             <a
               href="#"
@@ -118,7 +125,7 @@ export const Pricing = () => {
               <span className="absolute inset-0 bg-white/0 group-hover:bg-white/10 transition-all duration-300" />
               <span className="relative flex items-center justify-center gap-2">
                 <Sparkles className="w-4 h-4" />
-                Start 7-Day Free Trial
+                {t.pricing.plusCTA}
               </span>
             </a>
 
@@ -126,7 +133,7 @@ export const Pricing = () => {
               {plusPlanFeatures.map((f, i) => (
                 <div key={i} className="flex items-start gap-2.5">
                   <Check className="w-4 h-4 text-[#7C3AED] mt-0.5 shrink-0" />
-                  <span className="text-sm text-[#94A3B8]">{f}</span>
+                  <span className="text-sm" style={{ color: 'var(--text-secondary)' }}>{f}</span>
                 </div>
               ))}
             </div>
@@ -141,16 +148,17 @@ export const Pricing = () => {
           className="max-w-2xl mx-auto mt-16"
         >
           <Accordion type="single" collapsible className="space-y-3">
-            {pricingFAQ.map((faq, i) => (
+            {t.pricing.faq.map((faq, i) => (
               <AccordionItem
                 key={i}
                 value={`faq-${i}`}
-                className="border border-white/[0.08] bg-white/[0.02] rounded-xl px-6 overflow-hidden"
+                className="border rounded-xl px-6 overflow-hidden"
+                style={{ borderColor: 'var(--border-subtle)', backgroundColor: 'var(--bg-card)' }}
               >
-                <AccordionTrigger className="text-sm font-medium text-white hover:no-underline py-4">
+                <AccordionTrigger className="text-sm font-medium hover:no-underline py-4" style={{ color: 'var(--text-primary)' }}>
                   {faq.question}
                 </AccordionTrigger>
-                <AccordionContent className="text-sm text-[#94A3B8] pb-4">
+                <AccordionContent className="text-sm pb-4" style={{ color: 'var(--text-secondary)' }}>
                   {faq.answer}
                 </AccordionContent>
               </AccordionItem>
