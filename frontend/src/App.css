@@ -1,3 +1,90 @@
+/* ============================================================
+   DESIGN TOKENS — Theme Variables
+   Light mode = :root, Dark mode = .dark
+   ============================================================ */
+
+:root {
+  /* Backgrounds */
+  --bg-primary:        #F5F3FF;
+  --bg-secondary:      #EDE9FE;
+  --bg-card:           rgba(255, 255, 255, 0.85);
+  --bg-card-hover:     rgba(255, 255, 255, 0.95);
+  --bg-strip:          #EDE9FE;
+  --bg-nav:            rgba(245, 243, 255, 0.85);
+  --bg-input:          rgba(255, 255, 255, 0.8);
+  --bg-badge:          rgba(124, 58, 237, 0.08);
+  --bg-plus-section:   linear-gradient(to bottom, #EDE9FE, #F5F3FF);
+
+  /* Borders */
+  --border-primary:    rgba(124, 58, 237, 0.15);
+  --border-subtle:     rgba(0, 0, 0, 0.06);
+  --border-nav:        rgba(0, 0, 0, 0.08);
+
+  /* Text */
+  --text-primary:      #1A1033;
+  --text-secondary:    #4B5563;
+  --text-muted:        #6B7280;
+  --text-placeholder:  #9CA3AF;
+
+  /* Accent (brand colors — same in both themes) */
+  --accent-purple:     #7C3AED;
+  --accent-coral:      #F43F5E;
+  --accent-green:      #10B981;
+
+  /* Shadows */
+  --shadow-card:       0 4px 24px rgba(124, 58, 237, 0.08);
+  --shadow-glow:       0 0 40px rgba(124, 58, 237, 0.15);
+
+  /* Phone mockup */
+  --phone-bg:          rgba(255, 255, 255, 0.9);
+  --phone-border:      rgba(124, 58, 237, 0.2);
+
+  /* Scrollbar */
+  --scrollbar-track:   #EDE9FE;
+  --scrollbar-thumb:   #C4B5FD;
+}
+
+.dark {
+  /* Backgrounds */
+  --bg-primary:        #0A0A0F;
+  --bg-secondary:      #0F0F1A;
+  --bg-card:           rgba(255, 255, 255, 0.03);
+  --bg-card-hover:     rgba(255, 255, 255, 0.05);
+  --bg-strip:          #111118;
+  --bg-nav:            rgba(10, 10, 15, 0.85);
+  --bg-input:          rgba(255, 255, 255, 0.04);
+  --bg-badge:          rgba(124, 58, 237, 0.15);
+  --bg-plus-section:   linear-gradient(to bottom, #1A0533, #0A0A0F);
+
+  /* Borders */
+  --border-primary:    rgba(124, 58, 237, 0.15);
+  --border-subtle:     rgba(255, 255, 255, 0.06);
+  --border-nav:        rgba(255, 255, 255, 0.08);
+
+  /* Text */
+  --text-primary:      #F8FAFC;
+  --text-secondary:    #94A3B8;
+  --text-muted:        #64748B;
+  --text-placeholder:  #475569;
+
+  /* Accent (same) */
+  --accent-purple:     #7C3AED;
+  --accent-coral:      #F43F5E;
+  --accent-green:      #10B981;
+
+  /* Shadows */
+  --shadow-card:       0 4px 24px rgba(0, 0, 0, 0.4);
+  --shadow-glow:       0 0 60px rgba(124, 58, 237, 0.08);
+
+  /* Phone mockup */
+  --phone-bg:          rgba(17, 17, 24, 0.9);
+  --phone-border:      rgba(255, 255, 255, 0.1);
+
+  /* Scrollbar */
+  --scrollbar-track:   #0A0A0F;
+  --scrollbar-thumb:   #2A2A3A;
+}
+
 .App-logo {
     height: 40vmin;
     pointer-events: none;
@@ -14,6 +101,10 @@
 
 .font-mono {
   font-family: 'JetBrains Mono', monospace;
+}
+
+.font-bangla {
+  font-family: 'Hind Siliguri', sans-serif;
 }
 
 /* Smooth scrolling */
@@ -152,16 +243,16 @@ html {
 }
 
 ::-webkit-scrollbar-track {
-  background: #0A0A0F;
+  background: var(--scrollbar-track);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #2A2A3A;
+  background: var(--scrollbar-thumb);
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #3A3A4A;
+  background: var(--accent-purple);
 }
 
 /* Reduced motion */
@@ -175,4 +266,43 @@ html {
   .typing-dot {
     animation: none !important;
   }
+}
+
+/* Theme toggle animation */
+.theme-toggle-icon-enter {
+  animation: iconFadeIn 0.25s ease-out forwards;
+}
+@keyframes iconFadeIn {
+  from { opacity: 0; transform: scale(0.6) rotate(-30deg); }
+  to   { opacity: 1; transform: scale(1) rotate(0deg); }
+}
+
+/* Light mode body background */
+body {
+  background-color: var(--bg-primary);
+  transition: background-color 0.3s ease;
+}
+
+/* Bangla font override — headings fall back gracefully */
+.font-bangla h1,
+.font-bangla h2,
+.font-bangla h3,
+.font-bangla h4,
+.font-bangla p,
+.font-bangla span,
+.font-bangla button,
+.font-bangla a {
+  font-family: 'Hind Siliguri', sans-serif !important;
+}
+
+/* Increase line height for Bangla text (Bangla characters are taller) */
+.font-bangla p,
+.font-bangla span {
+  line-height: 1.8 !important;
+}
+
+/* Bangla display headings — slightly larger for readability */
+.font-bangla h1,
+.font-bangla h2 {
+  letter-spacing: 0 !important;
 }

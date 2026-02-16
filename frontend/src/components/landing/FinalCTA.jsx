@@ -1,10 +1,12 @@
 import { useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
-import { Sparkles, ArrowRight, MessageSquare } from 'lucide-react';
+import { Sparkles, MessageSquare } from 'lucide-react';
+import { useT } from '../../hooks/useT';
 
 export const FinalCTA = () => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-80px' });
+  const t = useT();
 
   return (
     <section className="relative py-24 lg:py-32 overflow-hidden">
@@ -46,10 +48,10 @@ export const FinalCTA = () => {
           transition={{ duration: 0.6 }}
         >
           <h2 className="font-display font-extrabold text-3xl sm:text-4xl lg:text-[56px] leading-[1.1] text-white mb-6">
-            Your AI Agent Is Waiting.<br />Set It Up in 5 Minutes.
+            {t.finalCTA.headline1}<br />{t.finalCTA.headline2}
           </h2>
           <p className="text-white/80 text-lg max-w-xl mx-auto mb-10">
-            Join 12,000+ influencers who never miss a customer message or a sales opportunity again.
+            {t.finalCTA.subtitle}
           </p>
           <div className="flex flex-wrap justify-center gap-4">
             <a
@@ -57,14 +59,14 @@ export const FinalCTA = () => {
               className="group inline-flex items-center gap-2.5 bg-white text-[#0A0A0F] font-semibold text-base px-8 py-4 rounded-full hover:bg-white/95 transition-all duration-300 hover:shadow-[0_0_40px_rgba(255,255,255,0.3)]"
             >
               <Sparkles className="w-5 h-5" />
-              Start for Free — No Card Needed
+              {t.finalCTA.ctaPrimary}
             </a>
             <a
               href="#"
               className="inline-flex items-center gap-2.5 text-white font-semibold text-base border-2 border-white/30 hover:border-white/60 px-8 py-4 rounded-full transition-all duration-300"
             >
               <MessageSquare className="w-5 h-5" />
-              Talk to Sales
+              {t.finalCTA.ctaSecondary}
             </a>
           </div>
         </motion.div>
