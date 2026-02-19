@@ -1,5 +1,5 @@
-import { motion, useInView } from 'framer-motion';
-import { useRef, useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Check } from 'lucide-react';
 import { Section } from './Section';
@@ -46,57 +46,79 @@ const plans = [
   },
 ];
 
+// === LIBRA.DEV ANIMATION LAYER ADDED BELOW ===
+const springHover = { type: 'spring', stiffness: 400, damping: 17 };
+const cardStagger = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: { staggerChildren: 0.12, delayChildren: 0.2 },
+  },
+};
+const cardItem = {
+  hidden: { opacity: 0, y: 30 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: 'easeOut' } },
+};
+
 export function Pricing() {
   const { isDark } = useTheme();
   const [isAnnual, setIsAnnual] = useState(true);
-  const ref = useRef(null);
-  const inView = useInView(ref, { once: true, margin: '-100px' });
 
   return (
     <Section id="pricing">
-      <div ref={ref} className="mx-auto flex max-w-5xl flex-col items-center gap-8 sm:gap-10 md:gap-12 px-4 sm:px-6 lg:px-8">
+      <div className="mx-auto flex max-w-5xl flex-col items-center gap-8 sm:gap-10 md:gap-12 px-4 sm:px-6 lg:px-8">
         <motion.h2
-          initial={{ opacity: 0, y: 20 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-80px' }}
+          transition={{ duration: 0.6, ease: 'easeOut' }}
           className="text-center text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-semibold"
           style={{ color: 'var(--foreground)' }}
         >
           Simple, Creator-Friendly Pricing
         </motion.h2>
         <motion.p
-          initial={{ opacity: 0, y: 20 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ delay: 0.1 }}
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-80px' }}
+          transition={{ delay: 0.1, duration: 0.6, ease: 'easeOut' }}
           className="text-base sm:text-lg max-w-[600px] text-center"
           style={{ color: 'var(--muted-foreground)' }}
         >
           Start free. Upgrade when you are ready to go Plus.
         </motion.p>
 
-        {/* Toggle */}
+        {/* Toggle — ADDED: spring transition on buttons */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ delay: 0.15 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-80px' }}
+          transition={{ delay: 0.15, duration: 0.5 }}
           className="flex items-center gap-3 rounded-full p-1"
           style={{
             backgroundColor: isDark ? 'rgba(255,255,255,0.05)' : 'rgba(0,0,0,0.04)',
             border: '1px solid var(--border)',
           }}
         >
-          <button
+          <motion.button
+            whileHover={{ scale: 1.04 }}
+            whileTap={{ scale: 0.96 }}
+            transition={springHover}
             onClick={() => setIsAnnual(false)}
-            className="rounded-full px-4 py-2 text-sm font-medium transition-all"
+            className="rounded-full px-4 py-2 text-sm font-medium transition-colors"
             style={{
               backgroundColor: !isAnnual ? 'var(--primary)' : 'transparent',
               color: !isAnnual ? 'white' : 'var(--muted-foreground)',
             }}
           >
             Monthly
-          </button>
-          <button
+          </motion.button>
+          <motion.button
+            whileHover={{ scale: 1.04 }}
+            whileTap={{ scale: 0.96 }}
+            transition={springHover}
             onClick={() => setIsAnnual(true)}
-            className="rounded-full px-4 py-2 text-sm font-medium transition-all flex items-center gap-2"
+            className="rounded-full px-4 py-2 text-sm font-medium transition-colors flex items-center gap-2"
             style={{
               backgroundColor: isAnnual ? 'var(--primary)' : 'transparent',
               color: isAnnual ? 'white' : 'var(--muted-foreground)',
@@ -112,17 +134,25 @@ export function Pricing() {
             >
               Save 34%
             </span>
-          </button>
+          </motion.button>
         </motion.div>
 
-        {/* Plans */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full">
+        {/* Plans — ADDED: stagger container + card hover physics */}
+        <motion.div
+          className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full"
+          variants={cardStagger}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: '-80px' }}
+        >
           {plans.map((plan, index) => (
             <motion.div
               key={plan.name}
-              initial={{ opacity: 0, y: 30 }}
-              animate={inView ? { opacity: 1, y: 0 } : {}}
-              transition={{ delay: 0.2 + index * 0.1 }}
+              variants={cardItem}
+              // ADDED: libra.dev card hover lift + scale
+              whileHover={{ y: -10, scale: 1.015 }}
+              whileTap={{ scale: 0.98 }}
+              transition={springHover}
               className="glass-1 rounded-2xl p-6 sm:p-8 relative flex flex-col"
               style={{
                 border: plan.popular ? '2px solid var(--primary)' : '1px solid var(--border)',
@@ -144,26 +174,40 @@ export function Pricing() {
               </div>
 
               <div className="mb-6">
-                <span className="text-4xl sm:text-5xl font-bold" style={{ color: 'var(--foreground)' }}>
-                  {isAnnual ? plan.priceAnnual : plan.priceMonthly}
-                </span>
+                {/* ADDED: AnimatePresence for price change animation */}
+                <AnimatePresence mode="wait">
+                  <motion.span
+                    key={isAnnual ? 'annual' : 'monthly'}
+                    initial={{ opacity: 0, y: -10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: 10 }}
+                    transition={{ duration: 0.2 }}
+                    className="text-4xl sm:text-5xl font-bold inline-block"
+                    style={{ color: 'var(--foreground)' }}
+                  >
+                    {isAnnual ? plan.priceAnnual : plan.priceMonthly}
+                  </motion.span>
+                </AnimatePresence>
                 <span className="text-sm ml-1" style={{ color: 'var(--muted-foreground)' }}>{plan.period}</span>
                 {isAnnual && plan.name === 'Plus' && (
                   <p className="text-xs mt-1" style={{ color: 'var(--muted-foreground)' }}>billed annually</p>
                 )}
               </div>
 
-              <Link
-                to="/signup"
-                className="w-full inline-flex items-center justify-center rounded-lg py-3 text-sm font-semibold transition-all mb-6"
-                style={{
-                  background: plan.popular ? 'linear-gradient(135deg, var(--brand), var(--primary))' : 'transparent',
-                  color: plan.popular ? 'white' : 'var(--foreground)',
-                  border: plan.popular ? 'none' : '1px solid var(--border)',
-                }}
-              >
-                {plan.cta}
-              </Link>
+              {/* ADDED: whileHover + whileTap on CTA link */}
+              <motion.div whileHover={{ scale: 1.03, y: -1 }} whileTap={{ scale: 0.97 }} transition={springHover}>
+                <Link
+                  to="/signup"
+                  className="w-full inline-flex items-center justify-center rounded-lg py-3 text-sm font-semibold transition-colors mb-6"
+                  style={{
+                    background: plan.popular ? 'linear-gradient(135deg, var(--brand), var(--primary))' : 'transparent',
+                    color: plan.popular ? 'white' : 'var(--foreground)',
+                    border: plan.popular ? 'none' : '1px solid var(--border)',
+                  }}
+                >
+                  {plan.cta}
+                </Link>
+              </motion.div>
 
               <ul className="space-y-3 flex-1">
                 {plan.features.map((feature) => (
@@ -175,7 +219,7 @@ export function Pricing() {
               </ul>
             </motion.div>
           ))}
-        </div>
+        </motion.div>
       </div>
     </Section>
   );

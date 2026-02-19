@@ -1,5 +1,4 @@
 import { motion } from 'framer-motion';
-import { useInView } from 'framer-motion';
 import { useRef } from 'react';
 import { MessageSquare, Package, Brain, Users, Calendar, BarChart3, Globe, Zap } from 'lucide-react';
 import { Section, GlassCard } from './Section';
@@ -212,17 +211,36 @@ function TileVisual({ type, isDark }) {
   return null;
 }
 
+// === LIBRA.DEV ANIMATION LAYER ADDED BELOW ===
+// Stagger container variants for the bento grid
+const gridContainer = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: { staggerChildren: 0.1, delayChildren: 0.2 },
+  },
+};
+const gridItem = {
+  hidden: { opacity: 0, y: 30 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.5, ease: 'easeOut' },
+  },
+};
+
 export function BentoGrid() {
   const { isDark } = useTheme();
-  const ref = useRef(null);
-  const inView = useInView(ref, { once: true, margin: '-100px' });
 
   return (
     <Section id="features">
-      <div ref={ref} className="max-w-container mx-auto flex flex-col items-center gap-8 md:gap-12 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-container mx-auto flex flex-col items-center gap-8 md:gap-12 px-4 sm:px-6 lg:px-8">
+        {/* ADDED: whileInView instead of useInView ref for cleaner code */}
         <motion.h2
           initial={{ opacity: 0, y: 20 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-80px' }}
+          transition={{ duration: 0.6, ease: 'easeOut' }}
           className="text-center text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-semibold text-balance"
           style={{ color: 'var(--foreground)' }}
         >
@@ -230,31 +248,40 @@ export function BentoGrid() {
         </motion.h2>
         <motion.p
           initial={{ opacity: 0, y: 20 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ delay: 0.1 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-80px' }}
+          transition={{ delay: 0.1, duration: 0.6, ease: 'easeOut' }}
           className="text-base sm:text-lg md:text-xl max-w-[700px] text-center font-medium text-balance"
           style={{ color: 'var(--muted-foreground)' }}
         >
           Everything you need to automate customer conversations, boost sales, and grow your audience — all on autopilot.
         </motion.p>
 
-        <div className="grid grid-cols-12 gap-4 w-full">
+        {/* ADDED: stagger container variants for the grid */}
+        <motion.div
+          className="grid grid-cols-12 gap-4 w-full"
+          variants={gridContainer}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: '-80px' }}
+        >
           {tiles.map((tile, index) => (
             <motion.div
               key={tile.title}
-              initial={{ opacity: 0, y: 30 }}
-              animate={inView ? { opacity: 1, y: 0 } : {}}
-              transition={{ delay: 0.1 + index * 0.08 }}
+              variants={gridItem}
               className={tile.size}
             >
               <GlassCard className="h-full">
                 <div className="flex flex-col gap-3">
-                  <div
+                  {/* ADDED: icon hover scale + rotation */}
+                  <motion.div
+                    whileHover={{ scale: 1.15, rotate: 8 }}
+                    transition={{ type: 'spring', stiffness: 400, damping: 15 }}
                     className="w-10 h-10 rounded-lg flex items-center justify-center"
                     style={{ background: `linear-gradient(135deg, var(--brand), var(--primary))`, opacity: 0.9 }}
                   >
                     <tile.icon className="w-5 h-5 text-white" />
-                  </div>
+                  </motion.div>
                   <h3 className="text-xl sm:text-2xl font-semibold leading-tight" style={{ color: 'var(--foreground)' }}>
                     {tile.title}
                   </h3>
@@ -268,7 +295,7 @@ export function BentoGrid() {
               </GlassCard>
             </motion.div>
           ))}
-        </div>
+        </motion.div>
       </div>
     </Section>
   );

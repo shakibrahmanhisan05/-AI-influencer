@@ -1,6 +1,21 @@
 import { Link } from 'react-router-dom';
 import { Zap } from 'lucide-react';
 import { useTheme } from '../../context/ThemeContext';
+// === LIBRA.DEV ANIMATION LAYER ADDED BELOW ===
+import { motion } from 'framer-motion';
+
+// Stagger variants for footer columns
+const footerContainer = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: { staggerChildren: 0.1, delayChildren: 0.1 },
+  },
+};
+const footerItem = {
+  hidden: { opacity: 0, y: 20 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: 'easeOut' } },
+};
 
 const columns = [
   {
@@ -38,10 +53,17 @@ export function Footer() {
   return (
     <footer className="w-full px-4 sm:px-6 lg:px-8" style={{ backgroundColor: 'var(--background-landing)' }}>
       <div className="max-w-container mx-auto">
-        {/* Main content */}
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-8 py-12 sm:py-16" style={{ borderTop: '1px solid var(--border)' }}>
+        {/* Main content — ADDED: stagger reveal on scroll */}
+        <motion.div
+          className="grid grid-cols-2 sm:grid-cols-4 gap-8 py-12 sm:py-16"
+          style={{ borderTop: '1px solid var(--border)' }}
+          variants={footerContainer}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: '-40px' }}
+        >
           {/* Brand */}
-          <div className="col-span-2 sm:col-span-1">
+          <motion.div variants={footerItem} className="col-span-2 sm:col-span-1">
             <div className="flex items-center gap-2 mb-3">
               <div className="w-7 h-7 rounded-lg flex items-center justify-center" style={{ background: 'linear-gradient(135deg, var(--brand), var(--primary))' }}>
                 <Zap className="w-4 h-4 text-white" />
@@ -51,28 +73,30 @@ export function Footer() {
             <p className="text-sm max-w-[250px]" style={{ color: 'var(--muted-foreground)' }}>
               Your AI agent is always online — replying, selling, and posting for you 24/7.
             </p>
-          </div>
+          </motion.div>
 
-          {/* Links */}
+          {/* Links — ADDED: hover scale on links */}
           {columns.map((col) => (
-            <div key={col.title}>
+            <motion.div key={col.title} variants={footerItem}>
               <h3 className="text-sm font-semibold mb-3" style={{ color: 'var(--foreground)' }}>{col.title}</h3>
               <ul className="space-y-2">
                 {col.links.map((link) => (
                   <li key={link.label}>
-                    <a
+                    <motion.a
                       href={link.href}
-                      className="text-sm transition-colors hover:opacity-80"
+                      className="text-sm transition-colors hover:opacity-80 inline-block"
                       style={{ color: 'var(--muted-foreground)' }}
+                      whileHover={{ x: 3 }}
+                      transition={{ type: 'spring', stiffness: 400, damping: 20 }}
                     >
                       {link.label}
-                    </a>
+                    </motion.a>
                   </li>
                 ))}
               </ul>
-            </div>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
 
         {/* Bottom bar */}
         <div
@@ -83,12 +107,12 @@ export function Footer() {
             &copy; {new Date().getFullYear()} InfluenceAI. All rights reserved.
           </span>
           <div className="flex items-center gap-4">
-            <a href="#" className="text-xs transition-colors hover:opacity-80" style={{ color: 'var(--muted-foreground)' }}>
+            <motion.a href="#" className="text-xs transition-colors hover:opacity-80" style={{ color: 'var(--muted-foreground)' }} whileHover={{ x: 2 }} transition={{ type: 'spring', stiffness: 400, damping: 20 }}>
               Privacy Policy
-            </a>
-            <a href="#" className="text-xs transition-colors hover:opacity-80" style={{ color: 'var(--muted-foreground)' }}>
+            </motion.a>
+            <motion.a href="#" className="text-xs transition-colors hover:opacity-80" style={{ color: 'var(--muted-foreground)' }} whileHover={{ x: 2 }} transition={{ type: 'spring', stiffness: 400, damping: 20 }}>
               Terms of Service
-            </a>
+            </motion.a>
           </div>
         </div>
       </div>

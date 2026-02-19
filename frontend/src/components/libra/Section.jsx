@@ -1,4 +1,6 @@
 import { cn } from '../../lib/utils';
+// === LIBRA.DEV ANIMATION LAYER ADDED BELOW ===
+import { motion } from 'framer-motion';
 
 export function Section({ className, children, ...props }) {
   return (
@@ -47,18 +49,24 @@ export function Glow({ variant = 'top', className }) {
   );
 }
 
+// ADDED: libra.dev spring hover physics on GlassCard
+const cardSpring = { type: 'spring', stiffness: 400, damping: 17 };
+
 export function GlassCard({ className, children, hover = true, ...props }) {
   return (
-    <div
+    <motion.div
+      whileHover={hover ? { y: -6, scale: 1.01 } : undefined}
+      whileTap={hover ? { scale: 0.98 } : undefined}
+      transition={cardSpring}
       className={cn(
-        'glass-1 group relative flex flex-col gap-6 overflow-hidden rounded-xl p-6 shadow-lg transition-all',
+        'glass-1 group relative flex flex-col gap-6 overflow-hidden rounded-xl p-6 shadow-lg transition-shadow',
         hover && 'hover:shadow-xl',
         className
       )}
       {...props}
     >
       {children}
-    </div>
+    </motion.div>
   );
 }
 

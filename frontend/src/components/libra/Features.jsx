@@ -1,21 +1,22 @@
-import { motion, useInView } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { useRef } from 'react';
 import { Section, Glow } from './Section';
 import { useTheme } from '../../context/ThemeContext';
 
 export function Features() {
   const { isDark } = useTheme();
-  const ref = useRef(null);
-  const inView = useInView(ref, { once: true, margin: '-100px' });
 
   return (
     <Section className="fade-bottom relative mb-8 sm:mb-12 md:mb-24 w-full overflow-hidden pb-0 sm:pb-0 md:pb-0">
-      <div className="relative" ref={ref}>
+      <div className="relative">
         <div className="max-w-container mx-auto flex flex-col gap-8 md:gap-16 px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col items-center gap-4 text-center sm:gap-6 md:gap-8">
+            {/* ADDED: whileInView viewport reveal */}
             <motion.h2
-              initial={{ opacity: 0, y: 20 }}
-              animate={inView ? { opacity: 1, y: 0 } : {}}
+              initial={{ opacity: 0, y: 40 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: '-80px' }}
+              transition={{ duration: 0.6, ease: 'easeOut' }}
               className="text-2xl sm:text-3xl md:text-5xl lg:text-6xl xl:text-7xl font-semibold leading-tight text-balance text-transparent bg-clip-text"
               style={{
                 backgroundImage: isDark
@@ -26,9 +27,10 @@ export function Features() {
               Powerful Features Influencers Love
             </motion.h2>
             <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              animate={inView ? { opacity: 1, y: 0 } : {}}
-              transition={{ delay: 0.1 }}
+              initial={{ opacity: 0, y: 40 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: '-80px' }}
+              transition={{ delay: 0.15, duration: 0.6, ease: 'easeOut' }}
               className="text-base sm:text-lg md:text-xl max-w-[620px] font-medium text-balance"
               style={{ color: 'var(--muted-foreground)' }}
             >
@@ -36,10 +38,11 @@ export function Features() {
             </motion.p>
           </div>
 
-          {/* Rising chart visualization like libra.dev */}
+          {/* Rising chart visualization — ADDED: viewport reveal */}
           <motion.div
             initial={{ opacity: 0, y: 40 }}
-            animate={inView ? { opacity: 1, y: 0 } : {}}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: '-80px' }}
             transition={{ delay: 0.3, duration: 0.8 }}
             className="w-full"
           >
@@ -50,6 +53,20 @@ export function Features() {
     </Section>
   );
 }
+
+// === LIBRA.DEV ANIMATION LAYER ADDED BELOW ===
+// Stagger variants for the bottom stats
+const statsContainer = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: { staggerChildren: 0.12 },
+  },
+};
+const statsItem = {
+  hidden: { opacity: 0, y: 20 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: 'easeOut' } },
+};
 
 function RisingChart({ isDark }) {
   const cardBg = isDark ? 'rgba(255,255,255,0.03)' : 'rgba(0,0,0,0.02)';
@@ -108,19 +125,26 @@ function RisingChart({ isDark }) {
         ))}
       </div>
 
-      {/* Bottom stats */}
-      <div className="grid grid-cols-3 gap-4 mt-6 pt-6" style={{ borderTop: `1px solid ${borderColor}` }}>
+      {/* Bottom stats — ADDED: stagger reveal */}
+      <motion.div
+        className="grid grid-cols-3 gap-4 mt-6 pt-6"
+        style={{ borderTop: `1px solid ${borderColor}` }}
+        variants={statsContainer}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, margin: '-40px' }}
+      >
         {[
           { label: 'Messages Automated', value: '98M+' },
           { label: 'Response Time', value: '< 3 sec' },
           { label: 'Revenue Lift', value: '3x avg' },
         ].map((stat) => (
-          <div key={stat.label} className="text-center">
+          <motion.div key={stat.label} className="text-center" variants={statsItem}>
             <div className="text-xl sm:text-2xl font-bold" style={{ color: 'var(--foreground)' }}>{stat.value}</div>
             <div className="text-xs" style={{ color: 'var(--muted-foreground)' }}>{stat.label}</div>
-          </div>
+          </motion.div>
         ))}
-      </div>
+      </motion.div>
     </div>
   );
 }

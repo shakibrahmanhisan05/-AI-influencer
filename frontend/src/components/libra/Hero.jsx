@@ -5,8 +5,33 @@ import { ColourfulText } from './ColourfulText';
 import { Section, Glow, Badge, MockupFrame } from './Section';
 import { useTheme } from '../../context/ThemeContext';
 
+// === LIBRA.DEV ANIMATION LAYER ADDED BELOW ===
+// Staggered word reveal variants for the hero headline
+const headlineContainer = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: { staggerChildren: 0.08, delayChildren: 0.1 },
+  },
+};
+const wordVariant = {
+  hidden: { opacity: 0, y: 30, filter: 'blur(4px)' },
+  visible: {
+    opacity: 1,
+    y: 0,
+    filter: 'blur(0px)',
+    transition: { type: 'spring', stiffness: 200, damping: 20 },
+  },
+};
+
+// Spring config reused for buttons & interactive elements
+const springHover = { type: 'spring', stiffness: 400, damping: 17 };
+
 export function Hero() {
   const { isDark } = useTheme();
+
+  // ADDED: split headline into words for staggered spring reveal
+  const headlineWords = 'Your AI Handles Every DM in'.split(' ');
 
   return (
     <Section className="fade-bottom overflow-hidden pb-0 sm:pb-0 md:pb-0 relative">
@@ -20,64 +45,94 @@ export function Hero() {
             </Link>
           </Badge>
 
-          {/* Main heading */}
-          <h1
-            className="animate-appear text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-semibold leading-tight text-balance text-transparent bg-clip-text"
+          {/* Main heading — ADDED: staggered word reveal */}
+          <motion.h1
+            variants={headlineContainer}
+            initial="hidden"
+            animate="visible"
+            className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-semibold leading-tight text-balance text-transparent bg-clip-text"
             style={{
               backgroundImage: isDark
                 ? 'linear-gradient(to right, var(--foreground), var(--muted-foreground))'
                 : 'linear-gradient(to right, var(--foreground), var(--foreground))',
             }}
           >
-            Your AI Handles Every DM in{' '}
+            {headlineWords.map((word, i) => (
+              <motion.span key={i} variants={wordVariant} className="inline-block mr-[0.3em]">
+                {word}
+              </motion.span>
+            ))}{' '}
             <ColourfulText text="seconds" />
-          </h1>
+          </motion.h1>
 
-          {/* Subtitle */}
-          <p
-            className="animate-appear delay-100 text-base sm:text-lg md:text-xl max-w-[700px] font-medium text-balance"
+          {/* Subtitle — ADDED: fade-up with delay */}
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.6, duration: 0.6, ease: 'easeOut' }}
+            className="text-base sm:text-lg md:text-xl max-w-[700px] font-medium text-balance"
             style={{ color: 'var(--muted-foreground)' }}
           >
             InfluenceAI gives social influencers a 24/7 AI agent that replies to every message,
             checks product availability, and auto-posts deals — so you never lose a sale.
-          </p>
+          </motion.p>
 
-          {/* CTA Buttons */}
-          <div className="animate-appear delay-200 flex flex-col sm:flex-row gap-3 mt-2">
-            <Link
-              to="/signup"
-              className="inline-flex items-center justify-center gap-2 rounded-lg px-6 py-3 text-sm font-semibold text-white transition-all hover:opacity-90 shadow-lg"
-              style={{ background: 'linear-gradient(135deg, var(--brand), var(--primary))' }}
-            >
-              Start for Free <ArrowRight className="w-4 h-4" />
-            </Link>
-            <a
-              href="#features"
-              className="inline-flex items-center justify-center gap-2 rounded-lg px-6 py-3 text-sm font-semibold transition-all"
-              style={{
-                color: 'var(--foreground)',
-                backgroundColor: isDark ? 'rgba(255,255,255,0.06)' : 'rgba(0,0,0,0.04)',
-                border: '1px solid var(--border)',
-              }}
-            >
-              <Play className="w-4 h-4" /> See How It Works
-            </a>
-          </div>
-
-          {/* App Mockup */}
-          <div className="relative w-full pt-10 md:pt-12">
-            <MockupFrame className="animate-appear delay-700">
-              <div
-                className="w-full rounded-xl overflow-hidden"
+          {/* CTA Buttons — ADDED: whileHover + whileTap spring physics */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.8, duration: 0.5 }}
+            className="flex flex-col sm:flex-row gap-3 mt-2"
+          >
+            <motion.div whileHover={{ scale: 1.04, y: -2 }} whileTap={{ scale: 0.97 }} transition={springHover}>
+              <Link
+                to="/signup"
+                className="inline-flex items-center justify-center gap-2 rounded-lg px-6 py-3 text-sm font-semibold text-white transition-all hover:opacity-90 shadow-lg"
+                style={{ background: 'linear-gradient(135deg, var(--brand), var(--primary))' }}
+              >
+                Start for Free <ArrowRight className="w-4 h-4" />
+              </Link>
+            </motion.div>
+            <motion.div whileHover={{ scale: 1.04, y: -2 }} whileTap={{ scale: 0.97 }} transition={springHover}>
+              <a
+                href="#features"
+                className="inline-flex items-center justify-center gap-2 rounded-lg px-6 py-3 text-sm font-semibold transition-all"
                 style={{
-                  backgroundColor: isDark ? 'rgba(20, 15, 30, 0.9)' : 'rgba(250, 248, 255, 0.9)',
-                  border: isDark ? '1px solid rgba(255,255,255,0.05)' : '1px solid var(--border)',
+                  color: 'var(--foreground)',
+                  backgroundColor: isDark ? 'rgba(255,255,255,0.06)' : 'rgba(0,0,0,0.04)',
+                  border: '1px solid var(--border)',
                 }}
               >
-                {/* Mock dashboard preview */}
-                <DashboardMockup isDark={isDark} />
-              </div>
-            </MockupFrame>
+                <Play className="w-4 h-4" /> See How It Works
+              </a>
+            </motion.div>
+          </motion.div>
+
+          {/* App Mockup — ADDED: gentle floating animation */}
+          <div className="relative w-full pt-10 md:pt-12">
+            <motion.div
+              initial={{ opacity: 0, y: 40, scale: 0.97 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              transition={{ delay: 1.0, duration: 0.8, ease: 'easeOut' }}
+            >
+              <motion.div
+                animate={{ y: [0, -12, 0] }}
+                transition={{ duration: 5, repeat: Infinity, repeatType: 'loop', ease: 'easeInOut' }}
+              >
+                <MockupFrame>
+                  <div
+                    className="w-full rounded-xl overflow-hidden"
+                    style={{
+                      backgroundColor: isDark ? 'rgba(20, 15, 30, 0.9)' : 'rgba(250, 248, 255, 0.9)',
+                      border: isDark ? '1px solid rgba(255,255,255,0.05)' : '1px solid var(--border)',
+                    }}
+                  >
+                    {/* Mock dashboard preview */}
+                    <DashboardMockup isDark={isDark} />
+                  </div>
+                </MockupFrame>
+              </motion.div>
+            </motion.div>
             <Glow variant="top" className="animate-appear-zoom delay-1000" />
           </div>
         </div>
