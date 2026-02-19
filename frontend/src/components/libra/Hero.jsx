@@ -51,20 +51,33 @@ export function Hero() {
             variants={headlineContainer}
             initial="hidden"
             animate="visible"
-            className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-semibold leading-tight text-balance text-transparent bg-clip-text"
-            style={{
-              backgroundImage: isDark
-                ? 'linear-gradient(to right, var(--foreground), var(--muted-foreground))'
-                : 'linear-gradient(to right, var(--foreground), var(--foreground))',
-            }}
+            className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-semibold leading-tight text-balance"
           >
             {headlineLine1.map((word, i) => (
-              <motion.span key={i} variants={wordVariant} className="inline-block mr-[0.3em]">
+              <motion.span
+                key={i}
+                variants={wordVariant}
+                className="inline-block mr-[0.3em] text-transparent bg-clip-text"
+                style={{
+                  backgroundImage: isDark
+                    ? 'linear-gradient(to right, var(--foreground), var(--muted-foreground))'
+                    : 'linear-gradient(to right, var(--foreground), var(--foreground))',
+                }}
+              >
                 {word}
               </motion.span>
             ))}{' '}
             {headlineLine2.map((word, i) => (
-              <motion.span key={`l2-${i}`} variants={wordVariant} className="inline-block mr-[0.3em]">
+              <motion.span
+                key={`l2-${i}`}
+                variants={wordVariant}
+                className="inline-block mr-[0.3em] text-transparent bg-clip-text"
+                style={{
+                  backgroundImage: isDark
+                    ? 'linear-gradient(to right, var(--foreground), var(--muted-foreground))'
+                    : 'linear-gradient(to right, var(--foreground), var(--foreground))',
+                }}
+              >
                 {word}
               </motion.span>
             ))}{' '}
