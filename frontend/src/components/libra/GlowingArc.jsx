@@ -3,19 +3,12 @@ import { motion } from 'framer-motion';
 
 /**
  * A bottom-anchored, curved glowing arc that looks like a rising planet/horizon.
+ * Designed to sit BEHIND the Revenue Growth chart card.
  * Uses layered radial-gradients + box-shadow for the warm amber glow.
- * Includes a slow breathing pulse animation.
  */
 export function GlowingArc() {
     return (
-        <div
-            className="absolute bottom-0 left-1/2 -translate-x-1/2 pointer-events-none"
-            style={{
-                width: '140%',
-                height: '800px',
-                zIndex: 0,
-            }}
-        >
+        <>
             {/* === Main arc body — large dark sphere with glowing rim === */}
             <motion.div
                 animate={{
@@ -28,14 +21,14 @@ export function GlowingArc() {
                 }}
                 style={{
                     position: 'absolute',
-                    bottom: '-55%',
+                    bottom: '-70%',
                     left: '50%',
                     transform: 'translateX(-50%)',
-                    width: '100%',
-                    height: '100%',
+                    width: '130%',
+                    height: '130%',
                     borderRadius: '50%',
-                    /* Dark inner sphere body */
-                    background: 'radial-gradient(ellipse at 50% 30%, rgba(40, 28, 12, 0.6) 0%, rgba(15, 10, 5, 0.9) 40%, transparent 70%)',
+                    background: 'radial-gradient(ellipse at 50% 30%, rgba(40, 28, 12, 0.3) 0%, rgba(15, 10, 5, 0.5) 30%, transparent 60%)',
+                    pointerEvents: 'none',
                 }}
             />
 
@@ -43,7 +36,7 @@ export function GlowingArc() {
             <motion.div
                 animate={{
                     scale: [1, 1.02, 1],
-                    opacity: [0.9, 1, 0.9],
+                    opacity: [0.85, 1, 0.85],
                 }}
                 transition={{
                     duration: 6,
@@ -52,19 +45,15 @@ export function GlowingArc() {
                 }}
                 style={{
                     position: 'absolute',
-                    bottom: '-55%',
+                    bottom: '-70%',
                     left: '50%',
                     transform: 'translateX(-50%)',
-                    width: '100%',
-                    height: '100%',
+                    width: '130%',
+                    height: '130%',
                     borderRadius: '50%',
-                    /* Top-edge concentrated glow */
-                    background: 'radial-gradient(ellipse at 50% 0%, rgba(245, 158, 11, 0.35) 0%, rgba(251, 146, 60, 0.15) 15%, transparent 40%)',
-                    boxShadow: [
-                        '0 -2px 60px rgba(245, 158, 11, 0.25)',
-                        '0 -4px 120px rgba(251, 146, 60, 0.15)',
-                        'inset 0 2px 80px rgba(245, 158, 11, 0.1)',
-                    ].join(', '),
+                    background: 'radial-gradient(ellipse at 50% 0%, rgba(245, 158, 11, 0.25) 0%, rgba(251, 146, 60, 0.1) 12%, transparent 35%)',
+                    boxShadow: '0 -2px 50px rgba(245, 158, 11, 0.15), 0 -4px 100px rgba(251, 146, 60, 0.08)',
+                    pointerEvents: 'none',
                 }}
             />
 
@@ -72,17 +61,17 @@ export function GlowingArc() {
             <div
                 style={{
                     position: 'absolute',
-                    bottom: '-55%',
+                    bottom: '-70%',
                     left: '50%',
                     transform: 'translateX(-50%)',
-                    width: '100%',
-                    height: '100%',
+                    width: '130%',
+                    height: '130%',
                     borderRadius: '50%',
-                    border: '1.5px solid rgba(245, 158, 11, 0.4)',
+                    border: '1px solid rgba(245, 158, 11, 0.3)',
                     borderBottom: 'none',
-                    /* Only show the top arc portion */
-                    clipPath: 'inset(0 0 50% 0)',
+                    clipPath: 'inset(0 5% 55% 5%)',
                     filter: 'blur(0.5px)',
+                    pointerEvents: 'none',
                 }}
             />
 
@@ -90,16 +79,17 @@ export function GlowingArc() {
             <div
                 style={{
                     position: 'absolute',
-                    bottom: '-60%',
+                    bottom: '-75%',
                     left: '50%',
                     transform: 'translateX(-50%)',
-                    width: '120%',
-                    height: '110%',
+                    width: '140%',
+                    height: '120%',
                     borderRadius: '50%',
-                    background: 'radial-gradient(ellipse at 50% 10%, rgba(180, 120, 40, 0.08) 0%, transparent 50%)',
-                    filter: 'blur(40px)',
+                    background: 'radial-gradient(ellipse at 50% 10%, rgba(180, 120, 40, 0.06) 0%, transparent 45%)',
+                    filter: 'blur(30px)',
+                    pointerEvents: 'none',
                 }}
             />
-        </div>
+        </>
     );
 }
