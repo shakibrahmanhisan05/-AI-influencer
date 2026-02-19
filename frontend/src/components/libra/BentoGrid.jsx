@@ -105,22 +105,7 @@ function TileVisual({ type, isDark }) {
   }
 
   if (type === 'voice') {
-    return (
-      <div className="w-full py-4 px-2">
-        <div className="flex items-center gap-3 mb-3">
-          <div className="flex-1 h-1.5 rounded-full overflow-hidden" style={{ backgroundColor: cardBg }}>
-            <motion.div
-              className="h-full rounded-full"
-              style={{ background: 'linear-gradient(90deg, var(--brand), var(--primary))' }}
-              initial={{ width: '0%' }}
-              whileInView={{ width: '87%' }}
-              transition={{ duration: 1.5, ease: 'easeOut' }}
-            />
-          </div>
-          <span className="text-xs font-bold" style={{ color: 'var(--primary)' }}>87%</span>
-        </div>
-      </div>
-    );
+    return null;
   }
 
   if (type === 'crm') {
