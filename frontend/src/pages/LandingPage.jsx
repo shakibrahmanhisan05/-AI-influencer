@@ -16,8 +16,8 @@ const LandingPage = () => {
       <MouseSpotlight />
       <Navbar />
       <Hero />
-      <BentoGrid />
       <Features />
+      <BentoGrid />
       <Pricing />
       <FAQ />
       <CTA />

@@ -197,7 +197,7 @@ export function BentoGrid() {
   const { isDark } = useTheme();
 
   return (
-    <Section id="features">
+    <Section>
       <div className="max-w-container mx-auto flex flex-col items-center gap-8 md:gap-12 px-4 sm:px-6 lg:px-8">
         {/* ADDED: whileInView instead of useInView ref for cleaner code */}
         <motion.h2

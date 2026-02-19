@@ -13,7 +13,7 @@ export function Features() {
   const { isDark } = useTheme();
 
   return (
-    <Section className="relative mb-8 sm:mb-12 md:mb-24 w-full overflow-hidden pb-0 sm:pb-0 md:pb-0">
+    <Section id="features" className="relative mb-0 sm:mb-0 md:mb-0 w-full overflow-hidden pb-0 sm:pb-0 md:pb-0">
       <div className="max-w-container mx-auto flex flex-col gap-0 px-4 sm:px-6 lg:px-8">
         {/* === Heading + Subtitle — clean, no effects === */}
         <div
