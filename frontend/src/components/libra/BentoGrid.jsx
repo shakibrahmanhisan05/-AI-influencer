@@ -19,13 +19,7 @@ const tiles = [
     size: 'col-span-12 sm:col-span-6 lg:col-span-7',
     visual: 'inventory',
   },
-  {
-    title: 'Your Voice, Not a Bot',
-    description: 'Train with up to 250K characters of context including your brand voice, FAQs, slang, and catchphrases. Followers will not know the difference.',
-    icon: Brain,
-    size: 'col-span-12 sm:col-span-6 lg:col-span-7',
-    visual: 'voice',
-  },
+
   {
     title: 'Built-In CRM',
     description: 'Every chat auto-captures contact info. Build an owned audience with tagging, segmentation, and export capabilities.',
@@ -104,9 +98,7 @@ function TileVisual({ type, isDark }) {
     );
   }
 
-  if (type === 'voice') {
-    return null;
-  }
+
 
   if (type === 'crm') {
     return (
