@@ -1,14 +1,39 @@
 import { motion } from 'framer-motion';
-import { useRef } from 'react';
-import { Section, Glow } from './Section';
+import { lazy, Suspense } from 'react';
+import { Section } from './Section';
+import { GlowingArc } from './GlowingArc';
 import { useTheme } from '../../context/ThemeContext';
+
+// === ADDED: libra.dev Features Visuals — lazy load R3F sphere for performance ===
+const FeaturesSphere = lazy(() =>
+  import('./FeaturesSphere').then((mod) => ({ default: mod.FeaturesSphere }))
+);
 
 export function Features() {
   const { isDark } = useTheme();
 
   return (
-    <Section className="fade-bottom relative mb-8 sm:mb-12 md:mb-24 w-full overflow-hidden pb-0 sm:pb-0 md:pb-0">
-      <div className="relative">
+    <Section className="relative mb-8 sm:mb-12 md:mb-24 w-full overflow-hidden pb-0 sm:pb-0 md:pb-0">
+      {/* === ADDED: Near-black background overlay for this section === */}
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          background: isDark
+            ? 'linear-gradient(to bottom, rgba(15, 10, 5, 0.95) 0%, rgba(10, 8, 4, 1) 40%, rgba(15, 10, 5, 0.95) 100%)'
+            : 'linear-gradient(to bottom, rgba(250, 245, 235, 0.6) 0%, rgba(245, 238, 225, 0.9) 40%, rgba(250, 245, 235, 0.6) 100%)',
+          zIndex: 0,
+        }}
+      />
+
+      {/* === ADDED: Glowing semi-circle horizon arc (Image 2 visual) === */}
+      <GlowingArc />
+
+      {/* === ADDED: R3F Wireframe sphere with orbiting rings (Image 1 visual) === */}
+      <Suspense fallback={null}>
+        <FeaturesSphere />
+      </Suspense>
+
+      <div className="relative" style={{ zIndex: 2 }}>
         <div className="max-w-container mx-auto flex flex-col gap-8 md:gap-16 px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col items-center gap-4 text-center sm:gap-6 md:gap-8">
             {/* ADDED: whileInView viewport reveal */}
