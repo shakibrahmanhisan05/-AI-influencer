@@ -30,10 +30,6 @@ const springHover = { type: 'spring', stiffness: 400, damping: 17 };
 export function Hero() {
   const { isDark } = useTheme();
 
-  // ADDED: split headline into words for staggered spring reveal
-  const headlineLine1 = 'Your AI Handles every DM.'.split(' ');
-  const headlineLine2 = 'You Handle'.split(' ');
-
   return (
     <Section className="fade-bottom overflow-hidden pb-0 sm:pb-0 md:pb-0 relative">
       <div className="max-w-container mx-auto flex flex-col gap-6 md:gap-8 px-4 sm:px-6 lg:px-8 pt-4 md:pt-8">
@@ -46,54 +42,33 @@ export function Hero() {
             </Link>
           </Badge>
 
-          {/* Main heading — ADDED: staggered word reveal */}
+          {/* Main heading — line-by-line stagger reveal, production-grade typography */}
           <motion.h1
             variants={headlineContainer}
             initial="hidden"
             animate="visible"
-            className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-semibold leading-tight text-balance"
+            className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold tracking-tight leading-[1.08]"
+            style={{ color: 'var(--foreground)' }}
           >
-            {headlineLine1.map((word, i) => (
-              <motion.span
-                key={i}
-                variants={wordVariant}
-                className="inline-block mr-[0.3em] text-transparent bg-clip-text"
-                style={{
-                  backgroundImage: isDark
-                    ? 'linear-gradient(to right, var(--foreground), var(--muted-foreground))'
-                    : 'linear-gradient(to right, var(--foreground), var(--foreground))',
-                }}
-              >
-                {word}
-              </motion.span>
-            ))}{' '}
-            {headlineLine2.map((word, i) => (
-              <motion.span
-                key={`l2-${i}`}
-                variants={wordVariant}
-                className="inline-block mr-[0.3em] text-transparent bg-clip-text"
-                style={{
-                  backgroundImage: isDark
-                    ? 'linear-gradient(to right, var(--foreground), var(--muted-foreground))'
-                    : 'linear-gradient(to right, var(--foreground), var(--foreground))',
-                }}
-              >
-                {word}
-              </motion.span>
-            ))}{' '}
-            <ColourfulText text="The Fame" />
+            <motion.span variants={wordVariant} className="block">
+              Your AI Handles Every DM.
+            </motion.span>
+            <motion.span variants={wordVariant} className="block">
+              You Handle{' '}
+              <ColourfulText text="The Fame" />
+            </motion.span>
           </motion.h1>
 
-          {/* Subtitle — ADDED: fade-up with delay */}
+          {/* Subtitle */}
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.6, duration: 0.6, ease: 'easeOut' }}
-            className="text-base sm:text-lg md:text-xl max-w-[700px] font-medium text-balance"
+            className="text-base sm:text-lg md:text-xl max-w-[640px] font-normal leading-relaxed"
             style={{ color: 'var(--muted-foreground)' }}
           >
-            InfluenceAI gives social influencers a 24/7 AI agent that replies to every message,
-            checks product availability, and auto-posts deals — so you never lose a sale.
+            An AI agent that replies to every DM, checks inventory in real time,
+            and auto-posts deals — 24/7, in your voice. Never miss a sale again.
           </motion.p>
 
           {/* CTA Buttons — ADDED: whileHover + whileTap spring physics */}
