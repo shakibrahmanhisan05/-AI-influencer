@@ -119,19 +119,6 @@ function TileVisual({ type, isDark }) {
           </div>
           <span className="text-xs font-bold" style={{ color: 'var(--primary)' }}>87%</span>
         </div>
-        <div className="text-xs text-center" style={{ color: 'var(--muted-foreground)' }}>Voice Match Score</div>
-        <div className="flex justify-center gap-1 mt-3">
-          {Array.from({ length: 20 }).map((_, i) => (
-            <motion.div
-              key={i}
-              className="w-1 rounded-full"
-              style={{ backgroundColor: 'var(--primary)' }}
-              initial={{ height: 8 }}
-              whileInView={{ height: 8 + Math.random() * 24 }}
-              transition={{ delay: i * 0.05, duration: 0.3, repeat: Infinity, repeatType: 'reverse', repeatDelay: Math.random() * 2 }}
-            />
-          ))}
-        </div>
       </div>
     );
   }
