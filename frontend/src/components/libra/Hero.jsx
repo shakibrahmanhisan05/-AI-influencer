@@ -31,7 +31,8 @@ export function Hero() {
   const { isDark } = useTheme();
 
   // ADDED: split headline into words for staggered spring reveal
-  const headlineWords = 'Your AI Handles Every DM in'.split(' ');
+  const headlineLine1 = 'Your AI Handles every DM.'.split(' ');
+  const headlineLine2 = 'You Handle'.split(' ');
 
   return (
     <Section className="fade-bottom overflow-hidden pb-0 sm:pb-0 md:pb-0 relative">
@@ -57,12 +58,17 @@ export function Hero() {
                 : 'linear-gradient(to right, var(--foreground), var(--foreground))',
             }}
           >
-            {headlineWords.map((word, i) => (
+            {headlineLine1.map((word, i) => (
               <motion.span key={i} variants={wordVariant} className="inline-block mr-[0.3em]">
                 {word}
               </motion.span>
             ))}{' '}
-            <ColourfulText text="seconds" />
+            {headlineLine2.map((word, i) => (
+              <motion.span key={`l2-${i}`} variants={wordVariant} className="inline-block mr-[0.3em]">
+                {word}
+              </motion.span>
+            ))}{' '}
+            <ColourfulText text="The Fame" />
           </motion.h1>
 
           {/* Subtitle — ADDED: fade-up with delay */}
