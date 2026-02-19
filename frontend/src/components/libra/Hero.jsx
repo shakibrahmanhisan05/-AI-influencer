@@ -31,7 +31,7 @@ export function Hero() {
   const { isDark } = useTheme();
 
   return (
-    <Section className="fade-bottom overflow-hidden pb-0 sm:pb-0 md:pb-0 relative">
+    <Section className="overflow-hidden pb-0 sm:pb-0 md:pb-0 relative">
       <div className="max-w-container mx-auto flex flex-col gap-6 md:gap-8 px-4 sm:px-6 lg:px-8 pt-4 md:pt-8">
         <div className="flex flex-col items-center gap-4 text-center">
           {/* Badge */}
@@ -127,7 +127,17 @@ export function Hero() {
                 </MockupFrame>
               </motion.div>
             </motion.div>
-            <Glow variant="top" className="animate-appear-zoom delay-1000" />
+
+            {/* Ambient glow — contained behind mockup, not bleeding into text */}
+            <div
+              className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[80%] h-[60%] pointer-events-none z-0"
+              style={{
+                background: isDark
+                  ? 'radial-gradient(ellipse at center, rgba(107, 10, 255, 0.15) 0%, rgba(59, 130, 246, 0.08) 40%, transparent 70%)'
+                  : 'radial-gradient(ellipse at center, rgba(107, 10, 255, 0.08) 0%, rgba(59, 130, 246, 0.04) 40%, transparent 70%)',
+                filter: 'blur(60px)',
+              }}
+            />
           </div>
         </div>
       </div>
