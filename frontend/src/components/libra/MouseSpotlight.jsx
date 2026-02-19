@@ -19,7 +19,7 @@ export function MouseSpotlight() {
     }, [mouseX, mouseY]);
 
     // Build the radial gradient background string reactively
-    const background = useMotionTemplate`radial-gradient(circle 600px at ${springX}px ${springY}px, rgba(129,140,248,0.15) 0%, transparent 55%)`;
+    const background = useMotionTemplate`radial-gradient(circle 600px at ${springX}px ${springY}px, rgba(180,130,50,0.10) 0%, transparent 55%)`;
 
     return (
         <motion.div

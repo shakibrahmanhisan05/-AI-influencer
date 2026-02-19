@@ -156,7 +156,7 @@ export function Pricing() {
               className="glass-1 rounded-2xl p-6 sm:p-8 relative flex flex-col"
               style={{
                 border: plan.popular ? '2px solid var(--primary)' : '1px solid var(--border)',
-                boxShadow: plan.popular ? '0 0 40px rgba(107, 10, 255, 0.1)' : 'none',
+                boxShadow: plan.popular ? '0 0 40px rgba(180, 120, 40, 0.12)' : 'none',
               }}
             >
               {plan.popular && (

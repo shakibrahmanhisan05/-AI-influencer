@@ -73,8 +73,8 @@ export function CTA() {
           className="fade-top-lg pointer-events-none absolute inset-0 rounded-2xl"
           style={{
             boxShadow: isDark
-              ? '0 -16px 128px 0 rgba(107, 10, 255, 0.15) inset, 0 -16px 32px 0 rgba(107, 10, 255, 0.1) inset'
-              : '0 -16px 128px 0 rgba(107, 10, 255, 0.06) inset, 0 -16px 32px 0 rgba(107, 10, 255, 0.04) inset',
+              ? '0 -16px 128px 0 rgba(180, 120, 40, 0.12) inset, 0 -16px 32px 0 rgba(180, 120, 40, 0.08) inset'
+              : '0 -16px 128px 0 rgba(180, 120, 40, 0.06) inset, 0 -16px 32px 0 rgba(180, 120, 40, 0.04) inset',
           }}
         />
       </div>

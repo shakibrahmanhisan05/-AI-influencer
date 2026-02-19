@@ -133,8 +133,8 @@ export function Hero() {
               className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[80%] h-[60%] pointer-events-none z-0"
               style={{
                 background: isDark
-                  ? 'radial-gradient(ellipse at center, rgba(107, 10, 255, 0.15) 0%, rgba(59, 130, 246, 0.08) 40%, transparent 70%)'
-                  : 'radial-gradient(ellipse at center, rgba(107, 10, 255, 0.08) 0%, rgba(59, 130, 246, 0.04) 40%, transparent 70%)',
+                  ? 'radial-gradient(ellipse at center, rgba(180, 120, 40, 0.15) 0%, rgba(160, 110, 30, 0.08) 40%, transparent 70%)'
+                  : 'radial-gradient(ellipse at center, rgba(180, 120, 40, 0.08) 0%, rgba(160, 110, 30, 0.04) 40%, transparent 70%)',
                 filter: 'blur(60px)',
               }}
             />
