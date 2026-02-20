@@ -25,7 +25,7 @@ const ConnectFacebookPage = () => {
   };
 
   const handleContinue = () => {
-    navigate('/dashboard');
+    navigate('/dashboard/overview');
   };
 
   const cardBg = isDark ? 'rgba(255,255,255,0.03)' : 'rgba(255,255,255,0.8)';
@@ -150,7 +150,7 @@ const ConnectFacebookPage = () => {
 
               {/* Skip */}
               <button
-                onClick={() => navigate('/dashboard')}
+                onClick={() => navigate('/dashboard/overview')}
                 className="w-full mt-3 text-sm font-medium transition-colors hover:opacity-80"
                 style={{ color: 'var(--muted-foreground)' }}
               >
